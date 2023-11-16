@@ -10,13 +10,21 @@ function App(){
     .then((data) =>{
       setBackendData(data);
     })
-  }, [])
+  },[])
 
-//console.log(backendData);
+  console.log(backendData);
 
   return(
     <div>
-      
+      {
+        (typeof backendData.users === 'undefined') ? (
+          <p>Loading...</p>
+        ):(
+          backendData.users.map((user, i) =>{
+            return <p key={i}>{user}</p>
+          })
+        )
+      }
     </div>
   )
 }
