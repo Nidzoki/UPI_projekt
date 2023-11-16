@@ -12,7 +12,7 @@ function App(){
     })
   }, [])
 
-console.log(backendData);
+//console.log(backendData);
 
   return(
     <div>
