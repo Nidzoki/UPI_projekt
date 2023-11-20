@@ -1,7 +1,7 @@
 @ECHO OFF
 cd server
-start cmd.exe /k nodemon start
+start cmd.exe /k npm start
 cd ..
 cd client
-npm run dev
+start cmd.exe /k npm run dev
 pause

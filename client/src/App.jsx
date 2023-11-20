@@ -6,28 +6,28 @@ function App() {
   const [backendData, setBackendData] = useState([{}])
 
   useEffect(() => {
-    fetch("/api")
+    fetch("http://localhost:8081/users")
     .then((response) => response.json())
     .then(data =>{
+      console.log(data);
       setBackendData(data);
     })
+    .catch((error) => console.log(error));
   }, []);
 
   console.log(backendData);
 
   return (
     
-    <>
+    <div>
+      
     {
-        (typeof backendData.users === 'undefined') ? (
-          <p>Loading...</p>
-        ):(
-          backendData.users.map((user, i) =>{
-            return <p key={i}>{user}</p>
-          })
-        )
-      }
-    </>
+      backendData.map((data, i) => (
+        <p key={i}>ID: {data.ID}, Name: {data.Name}, Surname: {data.Surname}</p>
+      )
+      )
+    }
+    </div>
     
   )
 }
