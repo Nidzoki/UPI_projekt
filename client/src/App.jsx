@@ -1,22 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React ,{useEffect, useState } from 'react'
 
+import './App.css'
 
-function App(){
+function App() {
   const [backendData, setBackendData] = useState([{}])
 
-  useEffect(() =>{
+  useEffect(() => {
     fetch("/api")
     .then((response) => response.json())
-    .then((data) =>{
+    .then(data =>{
       setBackendData(data);
     })
-  },[])
+  }, []);
 
   console.log(backendData);
 
-  return(
-    <div>
-      {
+  return (
+    
+    <>
+    {
         (typeof backendData.users === 'undefined') ? (
           <p>Loading...</p>
         ):(
@@ -25,8 +27,9 @@ function App(){
           })
         )
       }
-    </div>
+    </>
+    
   )
 }
 
-export default App;
+export default App
