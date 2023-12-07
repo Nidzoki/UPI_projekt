@@ -1,4 +1,144 @@
-body{
+#root {
+  margin: 0 auto;
+  width: 100vw;
+  text-align: center;
+}
+
+.pocetna {
+  display: grid;
+  grid-template-rows: 35vw 1fr 10vw;
+}
+
+#tijelo {
   display: flex;
+  background-color: #e91e63;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.funkcionalnosti {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+  max-width: 80%;
+  padding: 20px;
+  text-shadow: 3px 3px#a61948;
+  opacity: 0;
+  animation: opacityOn 1s forwards;
+  animation-delay: 2s;
+}
+
+
+.funkcionalnosti-slike {
+  padding: 0;
+  margin: 0;
+  max-width: 40%;
+  height: auto;
+  box-shadow: 10px 10px #a61948;
+  ;
+}
+
+#logoSlika {
+  width: 25%;
+  height: auto;
+}
+
+.funkcionalnosti-container {
+  padding: 10%;
+  max-width: 35%;
+}
+
+.container {
+  max-width: 1170px;
+  margin: auto;
+}
+
+.red {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+ul {
+  list-style: none;
+}
+
+.podnozje-stupac {
+  width: 15%;
+}
+
+.podnozje-stupac h4 {
+  font-size: 18px;
+  margin-bottom: 35px;
+  font-weight: 500;
+  position: relative;
+  text-align: left;
+}
+
+.podnozje-stupac h4::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  background-color: #e91e63;
+  height: 2px;
+  box-sizing: border-box;
+  width: 50px;
+}
+
+.podnozje-stupac ul li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.podnozje-stupac ul li a {
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: 300;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.podnozje-stupac ul li a:hover {
+  padding-left: 8px;
+}
+
+@keyframes opacityOn {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  75% {
+    opacity: 0.75
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/*------------------- signup i login------------------------ */
+.forme{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forme input{
+  margin: 10px;
+  padding: 20px;
+}
+
+.forme span{
+  margin: 10px;
 }
