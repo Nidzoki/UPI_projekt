@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Input } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { Input, Button } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone, HomeOutlined } from '@ant-design/icons';
+import { useNavigate, Link } from 'react-router-dom';
 import "../App.css";
+import appLogo from "../pic/logo-as1.png";
 
 
 function Login() {
@@ -31,7 +32,13 @@ function Login() {
 
     return (
         <div >
-            <h2>Log In</h2>
+            <Link to="/" style={{ position: "absolute", top: "10px", left: "10px" }}>
+                <Button style={{ cursor: 'pointer' }} icon={<HomeOutlined />}>Go back</Button>
+            </Link>
+
+            <img src={appLogo} className="logoSlika" />
+
+            <h2>Welcome back!</h2>
             <form onSubmit={provjeriPosalji} className="forme">
                 <Input type="email" name="email" value={logIn_podaci.email} onChange={promjenaPodataka}
                     placeholder="Email" style={{ width: '25%' }} />
@@ -40,8 +47,13 @@ function Login() {
                     placeholder="Password" style={{ width: '25%' }}
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
 
-                <button type="submit">Log In</button>
+                <button type="submit" style={{ backgroundColor: "#e91e63" }}>Log In</button>
             </form>
+
+            <p>Don&#39;t have an account? Make one!</p>
+            <Link to="/signup">
+                <Button>Sign up</Button>
+            </Link>
         </div>
     );
 }

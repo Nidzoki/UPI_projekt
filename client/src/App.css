@@ -26,9 +26,6 @@
   max-width: 80%;
   padding: 20px;
   text-shadow: 3px 3px#a61948;
-  opacity: 0;
-  animation: opacityOn 1s forwards;
-  animation-delay: 2s;
 }
 
 .funkcionalnosti-slike {
@@ -40,7 +37,7 @@
   ;
 }
 
-#logoSlika {
+.logoSlika {
   width: 25%;
   height: auto;
 }
@@ -103,47 +100,26 @@ ul {
   padding-left: 8px;
 }
 
-@keyframes opacityOn {
-  0% {
-    opacity: 0;
-  }
-
-  25% {
-    opacity: 0.25;
-  }
-
-  50% {
-    opacity: 0.5;
-  }
-
-  75% {
-    opacity: 0.75
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
 
 /*------------------- signup i login------------------------ */
-.forme{
+.forme {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
 
-.forme input{
+.forme input {
   margin: 10px;
   padding: 20px;
 }
 
-.forme span{
+.forme span {
   margin: 10px;
 }
 
 /* -----------------------navLeft-------------------- */
-#navLeft{
+#navLeft {
   height: 100%;
   width: 200px;
   z-index: 1;
@@ -152,3 +128,14 @@ ul {
   overflow-x: hidden;
   padding-top: 20px;
 }
+
+/* -------------------navGornja------------------------- */
+#navGornja {
+  width: 70%;
+  float: right;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+

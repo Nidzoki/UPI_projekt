@@ -1,4 +1,5 @@
 import "../App.css"
+import {Link} from "react-router-dom"
 
 
 function Footer(){
@@ -9,16 +10,16 @@ function Footer(){
             <div className="podnozje-stupac">
               <h4>Company</h4>
               <ul>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Our services</a></li>
+                <Link to="/aboutus"><li><a href="#">About us</a></li></Link>
+                <Link to="/services"><li><a href="#">Our services</a></li></Link>
                 <li><a href="https://policies.google.com/privacy?hl=en-US">Privacy policy</a></li>
               </ul>
             </div>
             <div className="podnozje-stupac">
               <h4>Help</h4>
               <ul>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Payment options</a></li>
+                <Link to="/faq"><li><a href="#">FAQ</a></li></Link>
+                <Link to="/payment"><li><a href="#">Payment options</a></li></Link>
               </ul>
             </div>
             <div className="podnozje-stupac">

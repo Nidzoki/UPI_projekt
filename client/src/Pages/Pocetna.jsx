@@ -4,7 +4,7 @@ import NavUpper from "../components/navUpper"
 function Pocetna() {
     return (
         <div id="pocetna">
-            <NavUpper />
+            <NavUpper/>
             <NavLeft />
         </div>
     )

@@ -13,7 +13,9 @@ function NavLeft() {
     };
     return (
         <div id="navLeft">
-            <img src={appLogo} style={{ width: "100px", height: "auto" }} />
+            <Link to="/">
+                <img src={appLogo} style={{ width: "100px", height: "auto" }} />
+            </Link>
             <Button icon={<PlusCircleOutlined />} type="primary" style={{ backgroundColor: "#e91e63" }}>
                 New schedule</Button>
 
