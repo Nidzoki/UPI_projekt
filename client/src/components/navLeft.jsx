@@ -12,7 +12,6 @@ function NavLeft() {
         setCurrent(e.key);
     };
     return (
-
         <div id="navLeft">
             <img src={appLogo} style={{ width: "100px", height: "auto" }} />
             <Button icon={<PlusCircleOutlined />} type="primary" style={{ backgroundColor: "#e91e63" }}>

@@ -1,10 +1,12 @@
-import navLeft from "../components/navLeft"
+import NavLeft from "../components/navLeft"
+import NavUpper from "../components/navUpper"
 
 function Pocetna() {
     return (
-        <>
-            <navLeft />
-        </>
+        <div id="pocetna">
+            <NavUpper />
+            <NavLeft />
+        </div>
     )
 }
 
