@@ -27,18 +27,15 @@ function App() {
 
     <div>
 
-      {
+      {/* {
         backendData.map((data, i) => (
           <p key={i}>ID: {data.ID}, Name: {data.Name}, Surname: {data.Surname}</p>
-        ))}
+        ))} */}
 
       <Router>
         <Header/>
         <Routes>
-          {/* Route for the home page */}
           <Route path="/" element={<HomePage />} />
-
-          {/* Route for the sign-in page */}
           <Route path="/signup" element={<SignUp />} />
           <Route path='/login' element={<LogIn />} />
         </Routes>
