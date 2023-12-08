@@ -4,9 +4,9 @@
   text-align: center;
 }
 
-.pocetna {
+.homePage {
   display: grid;
-  grid-template-rows: 35vw 1fr 10vw;
+  grid-template-rows: 3vw 35vw 1fr 10vw;
 }
 
 #tijelo {
@@ -30,7 +30,6 @@
   animation: opacityOn 1s forwards;
   animation-delay: 2s;
 }
-
 
 .funkcionalnosti-slike {
   padding: 0;
@@ -141,4 +140,15 @@ ul {
 
 .forme span{
   margin: 10px;
+}
+
+/* -----------------------navLeft-------------------- */
+#navLeft{
+  height: 100%;
+  width: 200px;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
 }

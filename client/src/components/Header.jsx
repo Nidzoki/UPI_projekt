@@ -22,7 +22,7 @@ const Header = () => {
         <Link to="/login">Log in</Link>
       </Menu.Item>
       <Menu.Item key="c" icon= {<MailOutlined />}>
-      <a href="mailto:AdaptScheduale@gmail.com"> CONTACT US </a>
+      <a href="mailto:AdaptSchedule@gmail.com"> Contact us </a>
       </Menu.Item>
      </Menu>
      <Outlet/>

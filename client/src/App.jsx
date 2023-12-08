@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import SignUp from './pages/SignUp';
-import Header from './components/Header';
 import LogIn from "./pages/LogIn";
+import Pocetna from "./Pages/Pocetna";
+import Verify from "./Pages/Verify"
 
 
 import './App.css'
@@ -33,11 +34,12 @@ function App() {
         ))} */}
 
       <Router>
-        <Header/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path='/login' element={<LogIn />} />
+          <Route path="/pocetna" element={<Pocetna />}/>
+          <Route path="/verify" element={<Verify />}/>
         </Routes>
       </Router>
     </div>

@@ -1,15 +1,17 @@
 import { useState } from "react";
-import "../App.css";
 import { Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import "../App.css";
+
 
 function Login() {
+
+    const nav = useNavigate();
+
     const [logIn_podaci, noviKorisnik] = useState({
-        userName: "",
-        password: "",
         email: "",
-        name: "",
-        lastName: "",
+        password: "",
     });
 
     function promjenaPodataka(event) {
@@ -18,10 +20,13 @@ function Login() {
 
     }
 
-
     const provjeriPosalji = (event) => {
         event.preventDefault()
         console.log(logIn_podaci)
+        //provjeri postoji li taj korisnik
+        //ako je
+        nav("/pocetna")
+
     }
 
     return (

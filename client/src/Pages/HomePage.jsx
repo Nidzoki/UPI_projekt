@@ -1,16 +1,23 @@
 import '../App.css'
 import appLogo from "../pic/logo-as1.png"
+import { Button } from "antd"
+import { Link } from "react-router-dom";
+import Footer from "../components/Footer"
+import Header from "../components/Header"
 
 function HomePage() {
 
   return (
-    <div className='pocetna'>
-
+    <div className='homePage'>
+      <Header/>
+      
       <div id='zagljavlje'>
-        <img src={appLogo} id="logoSlika"/>
+        <img src={appLogo} id="logoSlika" />
         <h2>Seize control of your time with our schedule app – where planning meets simplicity!</h2>
         <h3>Sign up, it&#39;s free!</h3>
-        <button>Sign up!</button>
+        <Link to="/signup">
+          <Button type="primary" style={{ backgroundColor: "#e91e63" }}>Sign up!</Button>
+        </Link>
       </div>
 
       <div id="tijelo">
@@ -54,37 +61,7 @@ function HomePage() {
         </div>
       </div>
 
-      <div id='podnozje'>
-        <div className="container">
-          <div className="red">
-            <div className="podnozje-stupac">
-              <h4>Company</h4>
-              <ul>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Our services</a></li>
-                <li><a href="#">Privacy policy</a></li>
-              </ul>
-            </div>
-            <div className="podnozje-stupac">
-              <h4>Help</h4>
-              <ul>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Payment options</a></li>
-              </ul>
-            </div>
-            <div className="podnozje-stupac">
-              <h4>Follow us</h4>
-              <ul>
-                <li><a href="https://www.facebook.com/">Facebook</a></li>
-                <li><a href="https://www.twitter.com">Twitter</a></li>
-                <li><a href="https://www.instagram.com">Instagram</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <p>&copy;2023 AdaptScheduale | All Rights Reserved</p>
-      </div>
+      <Footer />
 
     </div>
 
