@@ -1,4 +1,4 @@
-run.bat i run_first_time.bat datoteke služe za pokretanjem development servera frontenda i backenda odjednom,
+run.bat i run_first_time.bat datoteke služe za pokretanje development servera frontenda i backenda odjednom,
 umjesto da idete sami po terminalima i mapama i podižete svaki server ručno
 
 run_first_time.bat -> sadrži sve isto kao i run.bat + npm i, 
