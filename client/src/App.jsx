@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import SignUp from './pages/SignUp';
-import LogIn from "./pages/LogIn";
+import LogIn from "./Pages/LogIn";
 import Pocetna from "./Pages/Pocetna";
 import Verify from "./Pages/Verify"
 import FAQ from "./Pages/FAQ"
 import Payment from './Pages/Payment';
 import Services from './Pages/Services';
 import AboutUs from './Pages/AboutUs';
+import ChangePassword from "./Pages/ChangePassword"
+import NewSchedule from "./Pages/NewSchedule"
 
 
 import './App.css'
@@ -48,6 +50,8 @@ function App() {
           <Route path="/faq" element={<FAQ/>}/>
           <Route path="/payment" element={<Payment/>}/>
           <Route path="/services" element={<Services/>}/>
+          <Route path="/changepassword" element={<ChangePassword />}/>
+          <Route path='/newschedule' element={<NewSchedule />}/>
         </Routes>
       </Router>
     </div>

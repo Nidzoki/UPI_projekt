@@ -4,10 +4,10 @@ import { useState } from 'react';
 import "../App.css"
 const items = [
     {
-        key: 'SubMenu', icon: <UserOutlined />,
+        key: 'notification', icon: <BellOutlined />,
         children: [
             {
-                type: 'group', label: 'Item 1', children: [
+                type: 'not2', label: 'Item 1', children: [
                     {
                         label: 'Option 1',
                         key: 'setting:1',
@@ -19,7 +19,7 @@ const items = [
                 ],
             },
             {
-                type: 'group',
+                type: 'not2',
                 label: 'Item 2',
                 children: [
                     {
@@ -34,10 +34,10 @@ const items = [
             },
         ],
     }, {
-        key: 'notifications', icon: <BellOutlined />,
+        key: 'userSettings', icon: <UserOutlined />,
         children: [
             {
-                type: 'group', label: 'Item 1',
+                type: 'user1', label: 'Item 1',
                 children: [
                     {
                         label: 'Option 1',
@@ -50,7 +50,7 @@ const items = [
                 ],
             },
             {
-                type: 'group',
+                type: 'user2',
                 label: 'Item 2',
                 children: [
                     {
@@ -80,10 +80,9 @@ const NavUpper = () => {
     }
     return (
         <div id="navGornja">
-            
-            <Input type="text" name="name" value={search} onChange={Searching}
+            <Input id="inputGornjaNav" type="text" name="name" value={search} onChange={Searching}
                 placeholder="Search schedules" style={{ width: '50%', float: "left" }} icon={<SearchOutlined />} />
-            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={{ backgroundColor: "transparent" }}>
+            <Menu id="menuGornjaNav" onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={{ backgroundColor: "transparent" }}>
 
             </Menu>
         </div>

@@ -120,22 +120,88 @@ ul {
 
 /* -----------------------navLeft-------------------- */
 #navLeft {
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  width: 200px;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  overflow-x: hidden;
   padding-top: 20px;
 }
 
 /* -------------------navGornja------------------------- */
 #navGornja {
-  width: 70%;
   float: right;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-
 }
 
+#inputGornjaNav {
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* ----------------------about us---------------------- */
+#aboutus{
+  padding:20px;
+  background-color: #e91e63;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+#aboutusTijelo{
+  display: flex;
+  flex-direction: row;
+  max-width: 70%;
+  justify-content: space-between;
+ }
+
+#aboutusTijelo img{
+  width: 30%;
+  height: auto;
+  box-shadow: 7px 7px #a61948;
+  margin-right: 10px;
+}
+
+#aboutusTijelo p{
+  display: flex;
+  align-items: center;
+} 
+
+/*-----------------------faq--------------------------- */
+#faqTijelo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #e91e63;
+}
+
+#faqTijelo h1,
+#faqTijelo h2,
+#faqTijelo p,
+#faqTijelo .ant-btn {
+  margin: 10px;
+}
+
+/* --------------------pocetna-------------------------------- */
+#pocetna {
+  display: grid;
+  grid-template-areas: 
+  "navigacijaLijeva navigacijaGornja"
+    "navigacijaLijeva pocetnaTijelo";
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: 200px 1fr;
+  height: 100vh;
+}
+
+#navLeft {
+  grid-area: navigacijaLijeva;
+}
+
+#navGornja{
+  grid-area: navigacijaGornja;
+}
+
+#pocetnaTijelo {
+  grid-area: pocetnaTijelo;
+}

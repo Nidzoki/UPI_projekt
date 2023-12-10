@@ -6,7 +6,7 @@ import appLogo from '../pic/logo-as1.png'
 import '../App.css'
 
 
-function NavLeft() {
+const NavLeft = () => {
     const [current, setCurrent] = useState('h');
     const onClick = (e) => {
         setCurrent(e.key);
@@ -16,8 +16,10 @@ function NavLeft() {
             <Link to="/">
                 <img src={appLogo} style={{ width: "100px", height: "auto" }} />
             </Link>
-            <Button icon={<PlusCircleOutlined />} type="primary" style={{ backgroundColor: "#e91e63" }}>
-                New schedule</Button>
+            <Link to="/newschedule">
+                <Button icon={<PlusCircleOutlined />} type="primary" style={{ backgroundColor: "#e91e63" }}>
+                    New schedule</Button>
+            </Link>
 
             <Menu mode="vertical" onClick={onClick} selectedKeys={[current]} style={{ backgroundColor: '#333', color: "#ffffff" }}>
                 <Menu.Item key="u" icon={<ToTopOutlined />} style={{ color: "white" }}>

@@ -34,7 +34,6 @@ function HomePage() {
 
         <div className='funkcionalnosti'>
           <img className="funkcionalnosti-slike" src="https://www.graphicpear.com/wp-content/uploads/2022/11/Time-Management-Illustration.jpg" alt="student studying" />
-
           <div className="funkcionalnosti-container">
             <h2>Smart Time Management</h2>
             <p>Our intelligent algorithm suggests optimal time slots for your tasks based on priorities,
@@ -59,6 +58,7 @@ function HomePage() {
             <p>Never miss an important meeting or deadline again. Receive timely reminders and notifications to keep you on track.</p>
           </div>
         </div>
+        
       </div>
 
       <Footer />
