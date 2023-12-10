@@ -1,0 +1,56 @@
+.tablica{
+    display:grid;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-columns:  auto auto auto;
+    column-gap: 10px;
+    background-color: #f77f00;
+}
+.kalendar{
+    grid-column: 1/ span 1;
+    grid-row: 1/ span 5;
+    width: 700px;
+    height: 600px;
+    margin: 15px;
+    align-self: auto;
+}
+.pojedinacni{
+    grid-row: 1/ span 5;
+    grid-column: 2/span 1;
+    width:300px;
+    height:400px;
+}
+.botun1{
+    grid-column: 3/span 1;
+    grid-row: 1/span 1;
+    width: 200px;
+    margin: 10px;
+    column-gap: 5px;
+}
+.botun2{
+    grid-column: 3/span 1;
+    grid-row: 2/span 1;
+    width: 200px;
+    margin: 10px;
+    column-gap: 5px;
+}
+.botun3{
+    grid-column: 3/span 1;
+    grid-row: 3/span 1;
+    width: 200px;
+    margin: 10px;
+    column-gap: 5px;
+}
+.botun4{
+    grid-column: 3/span 1;
+    grid-row: 4/span 1;
+    width: 200px;
+    margin: 10px;
+    column-gap: 5px;
+}
+.botun5{
+    grid-row: 5/span 1;
+    grid-column: 3/span 1;
+    width: 200px;
+    margin: 10px;
+    column-gap: 5px;
+}

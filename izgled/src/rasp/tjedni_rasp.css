@@ -1,0 +1,48 @@
+.tablica{
+    background-color: #eae2b7;
+    display: grid;
+    grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px; 
+    grid-template-columns: auto auto auto auto auto auto auto auto ;
+    gap: auto;
+    outline-color: black;
+    border-color: black;
+    outline: auto;
+    color: black;
+}
+.botuni{
+    display:flex;
+    columns: 5;
+    margin: 10px;
+    column-gap: 5px;
+}
+.p11{grid-row: 1/ span 1; grid-column: 2/ span 1;}
+.p12{grid-row: 1/ span 1; grid-column: 3/ span 1;}
+.p13{grid-row: 1/ span 1; grid-column: 4/ span 1;}
+.p14{grid-row: 1/ span 1; grid-column: 5/ span 1;}
+.p15{grid-row: 1/ span 1; grid-column: 6/ span 1;}
+.p16{grid-row: 1/ span 1; grid-column: 7/ span 1;}
+.p17{grid-row: 1/ span 1; grid-column: 8/ span 1;}
+.p21{grid-row: 2/ span 1; grid-column: 1/ span 1;}
+.p31{grid-row: 3 / span 1; grid-column: 1/ span 1;}
+.p41{grid-row: 4 / span 1; grid-column: 1/ span 1;}
+.p51{grid-row: 5 / span 1; grid-column: 1/ span 1;}
+.p61{grid-row: 6 / span 1; grid-column: 1/ span 1;}
+.p71{grid-row: 7 / span 1; grid-column: 1/ span 1;}
+.p81{grid-row: 8 / span 1; grid-column: 1/ span 1;}
+.p91{grid-row: 9 / span 1; grid-column: 1/ span 1;}
+.p101{grid-row: 10 / span 1; grid-column: 1/ span 1;}
+.p111{grid-row: 11 / span 1; grid-column: 1/ span 1;}
+.p121{grid-row: 12 / span 1; grid-column: 1/ span 1;}
+.p131{grid-row: 13/ span 1; grid-column: 1/ span 1;}
+.p141{grid-row: 14 / span 1; grid-column: 1/ span 1;}
+.p151{grid-row: 15 / span 1; grid-column: 1/ span 1;}
+.p161{grid-row: 16 / span 1; grid-column: 1/ span 1;}
+.p171{grid-row: 17/ span 1; grid-column: 1/ span 1;}
+.p181{grid-row: 18 / span 1; grid-column: 1/ span 1;}
+.p191{grid-row: 19/ span 1; grid-column: 1/ span 1;}
+.p201{grid-row: 20/ span 1; grid-column: 1/ span 1;}
+.p211{grid-row: 21 / span 1; grid-column: 1/ span 1;}
+.p221{grid-row: 22 / span 1; grid-column: 1/ span 1;}
+.p231{grid-row: 23 / span 1; grid-column: 1/ span 1;}
+.p241{grid-row: 24 / span 1; grid-column: 1/ span 1;}
+.p251{grid-row: 25 / span 1; grid-column: 1/ span 1;}
