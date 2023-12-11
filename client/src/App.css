@@ -173,7 +173,8 @@ ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #e91e63;
+  background: linear-gradient(#e66465, #9198e5);
+  
 }
 
 #faqTijelo h1,
