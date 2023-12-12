@@ -10,7 +10,7 @@ import Payment from './Pages/Payment';
 import Services from './Pages/Services';
 import AboutUs from './Pages/AboutUs';
 import ChangePassword from "./Pages/ChangePassword"
-import NewSchedule from "./Pages/NewSchedule"
+import MonthSchedule from "./Pages/MonthSchedule"
 
 
 import './App.css'
@@ -51,7 +51,7 @@ function App() {
           <Route path="/payment" element={<Payment/>}/>
           <Route path="/services" element={<Services/>}/>
           <Route path="/changepassword" element={<ChangePassword />}/>
-          <Route path='/newschedule' element={<NewSchedule />}/>
+          <Route path="/monthSchedule" element={<MonthSchedule/>}/>
         </Routes>
       </Router>
     </div>

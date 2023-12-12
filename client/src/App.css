@@ -173,7 +173,7 @@ ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(#e66465, #9198e5);
+  background: linear-gradient(#e66465, #9198e5); 
   
 }
 
@@ -205,4 +205,19 @@ ul {
 
 #pocetnaTijelo {
   grid-area: pocetnaTijelo;
+}
+
+/* ---------------------------monthSchedule---------------------- */
+
+#navGornjaSch{
+  display: flex;
+  justify-content: space-between;
+}
+
+#gornjiLijevi button, #gornjiLijevi input{
+  margin: 5px;
+}
+
+:where(.css-dev-only-do-not-override-6j9yrn).ant-picker-calendar.ant-picker-calendar-full .ant-picker-calendar-date-content {
+  height: 58px;
 }
