@@ -23,7 +23,7 @@ function App() {
       
     {
       backendData.map((data, i) => (
-        <p key={i}>ID: {data.ID}, Name: {data.Name}, Surname: {data.Surname}</p>
+        <p key={i}>ID: {data.ID}, Name: {data.name}, Surname: {data.surname}</p>
       )
       )
     }

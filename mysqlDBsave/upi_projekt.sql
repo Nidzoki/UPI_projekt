@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: sql108.infinityfree.com
--- Generation Time: Dec 11, 2023 at 08:11 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.2.22
+-- Host: 127.0.0.1
+-- Generation Time: Dec 12, 2023 at 09:59 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,143 +18,143 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `if0_35364600_mySQL_Database`
+-- Database: `upi_projekt`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `EVENT REMINDER`
+-- Table structure for table `event reminder`
 --
 
-CREATE TABLE `EVENT REMINDER` (
+CREATE TABLE `event reminder` (
   `reminder` bigint(20) NOT NULL,
   `event` bigint(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `EVENT REMINDER`
+-- Dumping data for table `event reminder`
 --
 
-INSERT INTO `EVENT REMINDER` (`reminder`, `event`) VALUES
+INSERT INTO `event reminder` (`reminder`, `event`) VALUES
 (1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `EVENTS`
+-- Table structure for table `events`
 --
 
-CREATE TABLE `EVENTS` (
+CREATE TABLE `events` (
   `ID` bigint(20) UNSIGNED NOT NULL,
   `name` tinytext NOT NULL,
   `time` datetime NOT NULL,
   `type` tinytext NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `EVENTS`
+-- Dumping data for table `events`
 --
 
-INSERT INTO `EVENTS` (`ID`, `name`, `time`, `type`) VALUES
+INSERT INTO `events` (`ID`, `name`, `time`, `type`) VALUES
 (1, 'Marinov rodendan', '2023-12-12 00:00:00', 'birthday');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `REMINDERS`
+-- Table structure for table `reminders`
 --
 
-CREATE TABLE `REMINDERS` (
+CREATE TABLE `reminders` (
   `ID` bigint(20) UNSIGNED NOT NULL,
   `time` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `REMINDERS`
+-- Dumping data for table `reminders`
 --
 
-INSERT INTO `REMINDERS` (`ID`, `time`) VALUES
+INSERT INTO `reminders` (`ID`, `time`) VALUES
 (1, '2023-12-12 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `SCHEDULE EVENT`
+-- Table structure for table `schedule event`
 --
 
-CREATE TABLE `SCHEDULE EVENT` (
+CREATE TABLE `schedule event` (
   `event` bigint(20) NOT NULL,
   `schedule` bigint(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `SCHEDULE EVENT`
+-- Dumping data for table `schedule event`
 --
 
-INSERT INTO `SCHEDULE EVENT` (`event`, `schedule`) VALUES
+INSERT INTO `schedule event` (`event`, `schedule`) VALUES
 (1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `SCHEDULES`
+-- Table structure for table `schedules`
 --
 
-CREATE TABLE `SCHEDULES` (
+CREATE TABLE `schedules` (
   `ID` bigint(20) UNSIGNED NOT NULL,
   `name` tinytext NOT NULL,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `type` tinytext NOT NULL,
   `style` tinytext NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `SCHEDULES`
+-- Dumping data for table `schedules`
 --
 
-INSERT INTO `SCHEDULES` (`ID`, `name`, `start`, `end`, `type`, `style`) VALUES
+INSERT INTO `schedules` (`ID`, `name`, `start`, `end`, `type`, `style`) VALUES
 (1, 'Moj raspored', '2023-12-01 00:00:00', '2024-01-01 00:00:00', 'Mjesecni', 'dark');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `USERS`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `USERS` (
+CREATE TABLE `users` (
   `ID` bigint(20) UNSIGNED NOT NULL,
   `name` tinytext NOT NULL,
   `surname` tinytext NOT NULL,
   `mail` tinytext NOT NULL,
   `password` tinytext NOT NULL,
   `birthday` date NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `USERS`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `USERS` (`ID`, `name`, `surname`, `mail`, `password`, `birthday`) VALUES
-(1, '\0\0\0M\0\0\0a\0\0\0r\0\0\0k\0\0\0o', 'Maric', 'markomaric@nekimail.com', 'lozinka123', '2000-01-01');
+INSERT INTO `users` (`ID`, `name`, `surname`, `mail`, `password`, `birthday`) VALUES
+(1, 'Marko', 'Maric', 'markomaric@nekimail.com', 'lozinka123', '2000-01-01');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `USER SCHEDULE`
+-- Table structure for table `user schedule`
 --
 
-CREATE TABLE `USER SCHEDULE` (
+CREATE TABLE `user schedule` (
   `schedule` bigint(20) NOT NULL,
   `user` bigint(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `USER SCHEDULE`
+-- Dumping data for table `user schedule`
 --
 
-INSERT INTO `USER SCHEDULE` (`schedule`, `user`) VALUES
+INSERT INTO `user schedule` (`schedule`, `user`) VALUES
 (1, 1);
 
 --
@@ -163,49 +162,49 @@ INSERT INTO `USER SCHEDULE` (`schedule`, `user`) VALUES
 --
 
 --
--- Indexes for table `EVENT REMINDER`
+-- Indexes for table `event reminder`
 --
-ALTER TABLE `EVENT REMINDER`
+ALTER TABLE `event reminder`
   ADD PRIMARY KEY (`reminder`);
 
 --
--- Indexes for table `EVENTS`
+-- Indexes for table `events`
 --
-ALTER TABLE `EVENTS`
+ALTER TABLE `events`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `ID` (`ID`);
 
 --
--- Indexes for table `REMINDERS`
+-- Indexes for table `reminders`
 --
-ALTER TABLE `REMINDERS`
+ALTER TABLE `reminders`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `ID` (`ID`);
 
 --
--- Indexes for table `SCHEDULE EVENT`
+-- Indexes for table `schedule event`
 --
-ALTER TABLE `SCHEDULE EVENT`
+ALTER TABLE `schedule event`
   ADD PRIMARY KEY (`event`);
 
 --
--- Indexes for table `SCHEDULES`
+-- Indexes for table `schedules`
 --
-ALTER TABLE `SCHEDULES`
+ALTER TABLE `schedules`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `ID` (`ID`),
   ADD UNIQUE KEY `ID_2` (`ID`);
 
 --
--- Indexes for table `USERS`
+-- Indexes for table `users`
 --
-ALTER TABLE `USERS`
+ALTER TABLE `users`
   ADD UNIQUE KEY `ID` (`ID`);
 
 --
--- Indexes for table `USER SCHEDULE`
+-- Indexes for table `user schedule`
 --
-ALTER TABLE `USER SCHEDULE`
+ALTER TABLE `user schedule`
   ADD PRIMARY KEY (`schedule`);
 
 --
@@ -213,27 +212,27 @@ ALTER TABLE `USER SCHEDULE`
 --
 
 --
--- AUTO_INCREMENT for table `EVENTS`
+-- AUTO_INCREMENT for table `events`
 --
-ALTER TABLE `EVENTS`
+ALTER TABLE `events`
   MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `REMINDERS`
+-- AUTO_INCREMENT for table `reminders`
 --
-ALTER TABLE `REMINDERS`
+ALTER TABLE `reminders`
   MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `SCHEDULES`
+-- AUTO_INCREMENT for table `schedules`
 --
-ALTER TABLE `SCHEDULES`
+ALTER TABLE `schedules`
   MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `USERS`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `USERS`
+ALTER TABLE `users`
   MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
