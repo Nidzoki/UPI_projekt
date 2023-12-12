@@ -1,38 +1,48 @@
-{/*
-const vp=new Date(10/11/2023)
-const vk=new Date(10/11/2023)
-const dogadaji1=[["dog1",vp.setHours(11),vk.setHours(13)],["dog2",vp.setHours(14),vk.setHours(16)]]
-const dogadaji2=[["dog3",vp.setHours(15),vk.setHours(17)]]
+function kolizijaProvjera(dogadaji1,dogadaji2){
 
--> komplikacije prilikom korištenja DATE
--> za početak ću koristit int
-*/}
-const dogadaji1=[["dog1",11,13],["dog2",14,16]]
-const dogadaji2=[["dog3",15,17]]
-var dict_kol_provjera=new Object([])
+    //priprema koda
+var dict_kol_provjera=[]
+var dict_brojac=0
+var kolizije=[]
+var kolizije_brojac=0
+
+//Prolazak svih elemenata iz niza dogadaja dogadaji1
 for (let i = 0; i < dogadaji1.length; i++) {
-    const d = dogadaji1[i];
-    dict_kol_provjera[i]={
-        naziv: d[0],
-        pocetak_vr: d[1],
-        kraj_vr: d[2],
+    const dogadaj_ = dogadaji1[i];
+    //dogadaj iz dogadaji1 sprema se u dict_kol_provjera i povecavanje brojaca
+    dict_kol_provjera[dict_brojac]=dogadaj_;
+    dict_brojac++;
+    //u varijablu niz_dogadaj spremamo podatke iz trenutnog elementa u dogadaji1
+    let niz_dogadaj=[]
+    niz_dogadaj={
+        naziv:dogadaj_[0],
+        pocetak_vr:dogadaj_[1],
+        kraj_vr:dogadaj_[2]
     }
-}
-for (let i = 0; i < dogadaji2.length; i++) {
-    const d = dogadaji2[i];
-    dict_kol_provjera[dict_kol_provjera.length+i]={
-        naziv: d[0],
-        pocetak_vr: d[1],
-        kraj_vr: d[2],
-    }
-}
-for (let i = 0; i < dict_kol_provjera.length; i++) {
-    const niz_dogadaj = dict_kol_provjera[i];
-    for (let j = i+1; j < dict_kol_provjera.length; j++) {
-        const sljedeci = dict_kol_provjera[j];
-        if (sljedeci.pocetak_vr<niz_dogadaj.kraj_vr || sljedeci.kraj_vr<niz_dogadaj.pocetak_vr ) {
-            console.log(niz_dogadaj.naziv +" i "+sljedeci.naziv + " se preklapaju" )
+   //prolazimo elemente niza dogadaji2
+    for (let j = 0; j < dogadaji2.length; j++) {
+        const razlaganje=dogadaji2[j]
+        
+        let sljedeci=[]
+        sljedeci={
+            naziv:razlaganje[0],
+            pocetak_vr:razlaganje[1],
+            kraj_vr:razlaganje[2]
         }
+        //logika uporedbe : ako pocinje prije nego niz_dogadaj zavrsava ili zavrsava nakon sto niz_dogadaj pocne
+        if (
+        (niz_dogadaj.pocetak_vr==sljedeci.pocetak_vr && niz_dogadaj.kraj_vr==sljedeci.kraj_vr) ||
+        (niz_dogadaj.pocetak_vr<sljedeci.pocetak_vr && sljedeci.pocetak_vr<niz_dogadaj.kraj_vr) ||
+        (sljedeci.pocetak_vr<niz_dogadaj.pocetak_vr && niz_dogadaj.pocetak_vr<sljedeci.kraj_vr)
+        ) 
+        {
+            console.log(niz_dogadaj.naziv +" i "+sljedeci.naziv + " se preklapaju" )
+            kolizije[kolizije_brojac]=[niz_dogadaj.naziv,sljedeci.naziv]
+            kolizije_brojac++;
+        }
+        else{dict_kol_provjera[dict_kol_provjera.length+1]=razlaganje}
     }
 }
-console.log(dict_kol_provjera[0],dict_kol_provjera[1],dict_kol_provjera[2])
+return kolizije;
+}
+module.exports={kolizijaProvjera};
