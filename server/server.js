@@ -20,8 +20,8 @@ app.get('/', (req, res) => {return res.json("From backend side")});
 app.get("/users", (req, res)=>{
     const sql = "SELECT * FROM users WHERE users.mail = \"markomaric@nekimail.com\"";
     db.query(sql, (err, data) => {
-        if (err) { return res.json(err); }
-        else { return res.json(data); }
+        if (err) { res.send(err); }
+        else { res.send(data); }
     })
 })
 
