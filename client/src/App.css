@@ -221,3 +221,34 @@ ul {
 :where(.css-dev-only-do-not-override-6j9yrn).ant-picker-calendar.ant-picker-calendar-full .ant-picker-calendar-date-content {
   height: 58px;
 }
+
+
+/* -------------------------------weekSchedule-------------------------- */
+#gl{
+  background:linear-gradient(30deg, rgb(32, 57, 221), rgb(128, 223, 238) 40%, rgb(174, 0, 255));
+
+    max-width: 100%;
+    height:100vh;
+  };
+
+
+  .calendar_default_event_inner {
+    background: #2e78d6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 10pt;
+    padding: 5px;
+    opacity: 0.8;
+  }
+#botuni{
+  margin-top: 50px;
+  
+}
+ #gl button{
+  margin:5px;
+}
+#mon, #day{
+  margin-top: 100px;
+  
+}

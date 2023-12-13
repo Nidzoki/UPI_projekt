@@ -11,6 +11,7 @@ import Services from './Pages/Services';
 import AboutUs from './Pages/AboutUs';
 import ChangePassword from "./Pages/ChangePassword"
 import MonthSchedule from "./Pages/MonthSchedule"
+import WeekSchedule from './Pages/WeekSchedule';
 
 
 import './App.css'
@@ -52,6 +53,7 @@ function App() {
           <Route path="/services" element={<Services/>}/>
           <Route path="/changepassword" element={<ChangePassword />}/>
           <Route path="/monthSchedule" element={<MonthSchedule/>}/>
+          <Route path="/weekSchedule" element={<WeekSchedule/>}/>
         </Routes>
       </Router>
     </div>

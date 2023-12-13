@@ -96,10 +96,6 @@ ol li::before {
     }
 }
 
-ol {
-    /*margin-left: 50px;*/
-}
-
 #free li, #pay li {
     list-style: url('/src/pick/star.png');
     text-align: left;

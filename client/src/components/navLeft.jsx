@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PlusCircleOutlined, UserOutlined, TeamOutlined, ToTopOutlined, FolderOpenOutlined, DownOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, UserOutlined, TeamOutlined, ToTopOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import { Menu, Button, Modal, Card, Input, Radio } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import appLogo from '../pic/logo-as1.png'
@@ -27,10 +27,10 @@ const NavLeft = () => {
             }
             else {
                 console.log(false)
-                nav("/")
+                nav("/weekSchedule")
             }
         }
-    };
+    }
 
     function handleCancel() { setIsModalVisible(false) }
 
