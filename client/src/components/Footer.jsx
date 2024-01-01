@@ -9,7 +9,7 @@ function Footer(){
           <div className="red">
             <div className="podnozje-stupac">
               <h4>Company</h4>
-              <ul>
+              <ul style={{textAlign: "left"}}>
                 <Link to="/aboutus"><li><a href="#">About us</a></li></Link>
                 <Link to="/services"><li><a href="#">Our services</a></li></Link>
                 <li><a href="https://policies.google.com/privacy?hl=en-US">Privacy policy</a></li>
@@ -17,14 +17,14 @@ function Footer(){
             </div>
             <div className="podnozje-stupac">
               <h4>Help</h4>
-              <ul>
+              <ul style={{textAlign: "left"}}>
                 <Link to="/faq"><li><a href="#">FAQ</a></li></Link>
                 <Link to="/payment"><li><a href="#">Payment options</a></li></Link>
               </ul>
             </div>
             <div className="podnozje-stupac">
               <h4>Follow us</h4>
-              <ul>
+              <ul style={{textAlign: "left"}}>
                 <li><a href="https://www.facebook.com/">Facebook</a></li>
                 <li><a href="https://www.twitter.com">Twitter</a></li>
                 <li><a href="https://www.instagram.com">Instagram</a></li>

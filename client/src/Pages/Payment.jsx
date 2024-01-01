@@ -1,6 +1,8 @@
 import './Pages.css'
 import Footer from "../components/Footer"
 import Header from "../components/Header"
+import {Link} from "react-router-dom"
+
 
 function Payment() {
 
@@ -9,41 +11,41 @@ function Payment() {
       <Header />
       <div id="sadrzaj">
 
-        <div id="free">
+        <div className="element">
           <h1>Free</h1>
           <h2>Get started fast, free forever</h2>
           <div>
             <h1>0€</h1>
-            <button>Get started free</button>
+            <button ><Link to="/signup" style={{color:"white"}}>Get started </Link></button>
           </div>
           <hr></hr>
           <div>
-            <h4>Free features:</h4>
+            <h4>Features:</h4>
             <div className="lista">
               <ol>
-                <li>Make your schedule</li>
-                <li>Add an event</li>
-                <li>Notify me</li>
+                <li>Make schedules</li>
+                <li>Add events</li>
+                <li>Add reminders</li>
               </ol>
             </div>
           </div>
 
         </div>
 
-        <div id="pay">
+        <div className="element">
           <h1>Upgrade</h1>
           <h2>Widen your possibilities and enjoy</h2>
           <div>
-            <h1>5€</h1> per month
-            <button>Buy</button>
+            <h1>5€ / month</h1> 
+            <button>Subscribe</button>
           </div>
           <hr></hr>
           <div>
-            <h4>All free features, plus:</h4>
+            <h4>Extra features:</h4>
             <ol>
-              <li>Make frineds</li>
-              <li>Add special colors</li>
-              <li>More themes</li>
+              <li>Connect with people</li>
+              <li>Add palettes for events</li>
+              <li>Themes for schedules </li>
             </ol>
 
           </div>

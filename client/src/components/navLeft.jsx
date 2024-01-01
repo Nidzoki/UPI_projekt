@@ -64,7 +64,7 @@ const NavLeft = () => {
                 </Card>
             </Modal>
 
-            <Menu mode="vertical" onClick={onClick} selectedKeys={[current]} style={{ backgroundColor: '#333', color: "#ffffff" }}>
+            <Menu mode="vertical" onClick={onClick} selectedKeys={[current]} style={{ backgroundColor: 'inherit', color: "#ffffff" }}>
                 <Menu.Item key="u" icon={<ToTopOutlined />} style={{ color: "white" }}>
                     <Link to="/">Upload</Link>
                 </Menu.Item>

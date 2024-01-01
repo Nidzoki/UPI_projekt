@@ -16,7 +16,7 @@ function HomePage() {
         <h2>Seize control of your time with our schedule app – where planning meets simplicity!</h2>
         <h3>Sign up, it&#39;s free!</h3>
         <Link to="/signup">
-          <Button type="primary" style={{ backgroundColor: "#e91e63", height:"50px", width:"100px" }}>Sign up!</Button>
+          <Button type="primary" style={{ backgroundColor: "#E0E1DD", color: "black" }}>Sign up!</Button>
         </Link>
       </div>
 

@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background: #333;
+  background: #0D1B2A;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -28,8 +28,6 @@ body {
   place-items: center;
   box-sizing: border-box;
   overflow-x: hidden;
-  /* min-width: 320px;
-  min-height: 100vh; */
 }
 
 h1 {
@@ -38,6 +36,7 @@ h1 {
 }
 
 button {
+  background-color: #363636;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -49,7 +48,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #6068fe;
 }
 button:focus,
 button:focus-visible {

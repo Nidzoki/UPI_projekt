@@ -47,7 +47,7 @@ function Signup() {
     }
 
     return (
-        <div>
+        <div style={{padding:"20px 0px"}}>
             <Link to="/" style={{position:"absolute", top:"10px", left:"10px"}}>
                 <Button style={{cursor: 'pointer'}} icon={<HomeOutlined/>}>Go back</Button>
             </Link>
@@ -76,12 +76,12 @@ function Signup() {
                     placeholder="Confirm password" style={{ width: '25%' }}
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
 
-                <button type="submit" style={{ backgroundColor: "#e91e63" }}>Sign up</button>
+                <button type="submit" style={{ backgroundColor: "#264c7e" }}>Sign up</button>
             </form>
 
             <p>Already have an account?</p>
             <Link to="/login">
-                <Button>Log in</Button>
+                <button>Log in</button>
             </Link>
         </div>
     );

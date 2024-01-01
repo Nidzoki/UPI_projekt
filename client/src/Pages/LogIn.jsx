@@ -48,12 +48,12 @@ function Login() {
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
                 <p><Link to="/changepassword">Forgot password?</Link></p> {/* postaviti kako prominiti lozinku */}
 
-                <button type="submit" style={{ backgroundColor: "#e91e63" }}>Log In</button>
+                <button type="submit" style={{ backgroundColor: "264c7e" }}>Log In</button>
             </form>
 
             <p>Don&#39;t have an account? Make one!</p>
             <Link to="/signup">
-                <Button>Sign up</Button>
+                <button>Sign up</button>
             </Link>
         </div>
     );

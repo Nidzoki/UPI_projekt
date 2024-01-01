@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import SignUp from './pages/SignUp';
+import SignUp from './Pages/SignUp';
 import LogIn from "./Pages/LogIn";
 import Pocetna from "./Pages/Pocetna";
 import Verify from "./Pages/Verify"
@@ -12,6 +12,7 @@ import AboutUs from './Pages/AboutUs';
 import ChangePassword from "./Pages/ChangePassword"
 import MonthSchedule from "./Pages/MonthSchedule"
 import WeekSchedule from './Pages/WeekSchedule';
+import UserSettings from "./Pages/UserSettings"
 
 
 import './App.css'
@@ -54,6 +55,7 @@ function App() {
           <Route path="/changepassword" element={<ChangePassword />}/>
           <Route path="/monthSchedule" element={<MonthSchedule/>}/>
           <Route path="/weekSchedule" element={<WeekSchedule/>}/>
+          <Route path="/userSettings" element={<UserSettings/>}/>
         </Routes>
       </Router>
     </div>

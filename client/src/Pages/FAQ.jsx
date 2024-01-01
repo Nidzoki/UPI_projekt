@@ -1,4 +1,4 @@
-// import '../App.css'
+import '../App.css'
 import { useState } from 'react';
 import Footer from "../components/Footer"
 import Header from "../components/Header"

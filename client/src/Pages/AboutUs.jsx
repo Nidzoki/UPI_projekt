@@ -8,7 +8,7 @@ function AboutUs() {
     <div>
       <Header />
       <div id="aboutus">
-        <h1>ABOUT US</h1>
+        <h1>About team UPIt ćemo se</h1>
 
         <div id="aboutusTijelo">
           <img src="https://img.freepik.com/free-photo/happy-young-business-team-four-people_1262-2127.jpg" alt="team"></img>
