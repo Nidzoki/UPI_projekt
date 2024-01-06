@@ -1,31 +1,42 @@
-const express = require('express');
-const mysql = require('mysql');
-const cors = require('cors');
+import express from 'express'
+import {getUserById, getUsers, getUserByMail} from './database.js'
 
-const app = express();
+const app = express()
 
-app.use(cors());
+app.use(express.json())
 
-const db = mysql.createConnection(
-    {
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'upi_projekt'
+app.get('/users', async (req, res) => {
+    res.send(await getUsers())
+})
+
+app.get('/users/searchbyid/:id', async (req, res) => {
+    const id = req.params.id
+    res.send(await getUserById(id))
+})
+
+app.get('/users/searchbymail/:mail', async (req, res) => {
+    const mail = req.params.mail
+    res.send(await getUserByMail(mail))
+})
+
+app.post('/users', async (req, res)=>{
+    const {name, surname, mail, password, birthday} = req.body
+    if(getUserByMail(mail) === undefined) {
+        res.status(201).send(await createUser(name, surname, mail, password, birthday))
     }
-)
-
-app.get('/', (req, res) => {return res.json("From backend side")});
-
-app.get("/users", (req, res)=>{
-    const sql = "SELECT * FROM users WHERE users.mail = \"markomaric@nekimail.com\"";
-    db.query(sql, (err, data) => {
-        if (err) { return res.json(err); }
-        else { return res.json(data); }
-    })
+    else{
+        console.log("User already exists")
+        res.status(200).send("User alreaday exists!")
+    }
+    
 })
 
 
-app.listen(8081, (req, res) => {
-    console.log("listening on port 8081");
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send("Something broke!")
+})
+
+app.listen(8080, () => {
+    console.log('listening on port 8080')
 })
