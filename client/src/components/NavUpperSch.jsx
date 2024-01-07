@@ -1,39 +1,17 @@
 import { useState } from 'react';
 import { Menu, Input, Button } from 'antd';
-import { UserOutlined, BellOutlined } from '@ant-design/icons';
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom"
 import "../App.css";
 
-const userSettings = [
-    {
-        key: 'notification', icon: <BellOutlined />,
-        children: [
-            {
-               key: "setting1", label: 'Item 1'
-            },
-            {
-                key: "setting2", label: 'Item 2'
-             },
-        ],
-    }, {
-        key: 'userSettings', icon: <UserOutlined />,
-        children: [{
-            key: "checkSettings", label: 'Check settings'
-         },
-         {
-             key: "logout", label: 'Log out'
-          },
-        ],
-    }
-];
 
-
-const NavUpperSch = () => {
+const NavUpperSch = (naziv) => {
     const [current, setCurrent] = useState('mail');
     const klik = (e) => {
         console.log('click ', e);
         setCurrent(e.key);
     };
-    const [naziv, postaviNaziv] = useState('');
+    const [nazivRasporeda, postaviNaziv] = useState(naziv);
 
     function NoviNaziv(event) {
         postaviNaziv(event.target.value);
@@ -42,20 +20,27 @@ const NavUpperSch = () => {
     return (
         <div id="navGornjaSch">
             <div id="gornjiLijevi">
-                <Button type={"primary"}>Save changes</Button>
-                <Button>Delete schedule</Button>
+                <Button type={"primary"} >Save</Button>
+                <Button>Delete</Button>
                 <Input
                     id="imeRasporeda"
                     type="text"
                     name="name"
-                    value={naziv}
                     onChange={NoviNaziv}
                     placeholder="Name of schedule"
                     style={{ width: "200px" }}
                 />
             </div>
 
-            <Menu id="menuGornjaNav" onClick={klik} selectedKeys={[current]} mode="horizontal" items={userSettings} style={{ backgroundColor: "transparent" }}/>
+            <Menu onClick={klik} selectedKeys={[current]} mode="horizontal" style={{ backgroundColor: "inherit", color: "white", paddingRight: "10px" }}>                
+                <Menu.Item key="user" icon={<UserOutlined />}>
+                    <Link to="/userSettings">User</Link>
+                </Menu.Item>
+
+                <Menu.Item key="logout" icon={<LogoutOutlined />}>
+                    <Link to="/"> Logout</Link>
+                </Menu.Item>
+            </Menu>
         </div>
     );
 };

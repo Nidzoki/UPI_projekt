@@ -1,8 +1,22 @@
-function UsreSettings(){
-    return(
-        <>
-        </>
-    )
-}
+import { useState } from 'react';
+import "../App.css"
 
-export default UsreSettings;
+const userSetting = () => {
+    const [podaci, setPodaci] = useState({
+        userName: "",
+        password: "",
+        email: "",
+        name: "",
+        lastName: ""
+    });
+    
+    return (
+        <div id="userSettings">
+           <form>
+            
+           </form>
+        </div>
+    )
+};
+export default userSetting;
+

@@ -25,7 +25,7 @@ function Login() {
         event.preventDefault()
         console.log(logIn_podaci)
         //provjeri postoji li taj korisnik
-        //ako je
+        //ako je -> token !!!
         nav("/pocetna")
 
     }

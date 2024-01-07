@@ -4,7 +4,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import NavUpper from '../components/NavUpperSch';
 import "../App.css"
 
-const Mjesecni = () => {
+const Mjesecni = (nazivRasporeda) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [events, setEvents] = useState({
         key:0,
@@ -76,16 +76,16 @@ const Mjesecni = () => {
         margin: 'auto',
         marginTop: '20px',
     };
-
+    console.log("Naziv", nazivRasporeda)
     return (
         <div className="tablica">
-            <NavUpper id="navSchGornja" />
+            <NavUpper id="navSchGornja" naziv={nazivRasporeda} />
             <Calendar id="kalendar" onSelect={handleDateSelect} CellRender={CellRender} style={kalendarStil} />
 
             {selectedDate && (
                 <Modal
                     title={`Događaji za ${selectedDate}: `}
-                    visible={isModalVisible}
+                    open={isModalVisible}
                     onCancel={handleCancel}
                     footer={[
                         <Button key="cancel" onClick={handleCancel}>

@@ -21,37 +21,44 @@ function Signup() {
         const { name, value } = event.target;
         noviKorisnik({ ...signUp_podaci, [name]: value });
         if (name == "confirmPassword") {
-
             provjeraLozinke(value)
         }
 
     }
-    function imaLiBroj(tekst) {
+    function imaLiBroj(tekst) { //provjerava li ima li tekst (lozinka brojeva)
         return /\d/.test(tekst);
+    }
+
+    function jeLiPopunjen(obj) {
+        return !Object.values(obj).some(element => element !== null); //vraća false ako je objekt prazan, provjeravamo je li korisnik unio podatke
     }
 
 
     const provjeriPosalji = (event) => {
         event.preventDefault()
-        if (confirmPassword == signUp_podaci.password) {
-            if (confirmPassword.length >= 8 && imaLiBroj(confirmPassword)) {
-                //provjeri je li username uzet
-                nav("/verify")
+        if (jeLiPopunjen(signUp_podaci) && confirmPassword != null) {
+            if (confirmPassword == signUp_podaci.password) {
+                if (confirmPassword.length >= 8 && imaLiBroj(confirmPassword)) {
+                    //provjeri je li username uzet -> napravi novog korisnika
+                    nav("/pocena")
+                }
             }
-
+            else {
+                alert("Passwords do not match!")
+                provjeraLozinke("");
+            }
         }
-        else {
-            alert("Passwords do not match!")
-            provjeraLozinke("");
+        else{
+            alert("Some fields were not filled");
         }
     }
 
     return (
-        <div style={{padding:"20px 0px"}}>
-            <Link to="/" style={{position:"absolute", top:"10px", left:"10px"}}>
-                <Button style={{cursor: 'pointer'}} icon={<HomeOutlined/>}>Go back</Button>
+        <div style={{ padding: "20px 0px" }}>
+            <Link to="/" style={{ position: "absolute", top: "10px", left: "10px" }}>
+                <Button style={{ cursor: 'pointer' }} icon={<HomeOutlined />}>Go back</Button>
             </Link>
-                <img src={appLogo} className="logoSlika" />
+            <img src={appLogo} className="logoSlika" />
 
             <h2>Create your account!</h2>
             <form onSubmit={provjeriPosalji} className="forme">
@@ -75,6 +82,8 @@ function Signup() {
                 <Input.Password name="confirmPassword" value={confirmPassword} onChange={promjenaPodataka}
                     placeholder="Confirm password" style={{ width: '25%' }}
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+
+                <label>Password has to be at least 16 characters to have one number</label><br />
 
                 <button type="submit" style={{ backgroundColor: "#264c7e" }}>Sign up</button>
             </form>

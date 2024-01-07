@@ -8,7 +8,8 @@ function Pocetna() {
         <div id="pocetna">
             <NavUpper id="navigacijaGornja" />
             <NavLeft id="navigacijaLijeva" />
-            <div id="pocetnaTijelo">                
+            <div id="pocetnaTijelo">
+                {/* prikaz rasporeda korisnika */}
 
             </div>
         </div>
