@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
 import '../App.css'
+import NavUpper from '../components/NavUpperSch';
+import { useLocation } from 'react-router-dom';
 
 const styles = {
     wrap: {
@@ -15,6 +17,9 @@ const styles = {
 };
 
 function WeekSchedule() {
+
+    const location = useLocation();
+    const nazivRasporeda = location.state;
 
     const calendarRef = useRef()
 
@@ -127,32 +132,30 @@ function WeekSchedule() {
     const [date, setDate] = useState(new Date())//nista zasad
 
     return (
-        <div id="gl" style={styles.wrap}>
+        <>
+            <NavUpper id="navSchGornja" naziv={nazivRasporeda} raspored={nazivRasporeda} />
+            <div id="gl" style={styles.wrap}>
 
-            <div id="mon" style={styles.left}>
-                <DayPilotNavigator
-                    selectMode={"week"}
-                    startDate={"2023-12-10"}
-                    selectionDay={"2023-12-10"}
-                    onTimeRangeSelected={args => {
-                        calendarRef.current.control.update({
-                            startDate: args.day
-                        });
-                    }}
-                />
-                <div id="botuni">
-                    <button>Monthly</button>
-                    <button>Back</button></div>
+                <div id="mon" style={styles.left}>
+                    <DayPilotNavigator style={{backgroundColor: "white"}}
+                        selectMode={"week"}
+                        startDate={"2023-12-10"}
+                        selectionDay={"2023-12-10"}
+                        onTimeRangeSelected={args => {
+                            calendarRef.current.control.update({
+                                startDate: args.day
+                            });
+                        }}
+                    />
+
+                </div>
+
+                <div id="day" style={styles.main}>
+                    <DayPilotCalendar {...calendarConfig}  ref={calendarRef} />
+                </div>
+
             </div>
-            <div id="day" style={styles.main}>
-                <DayPilotCalendar
-                    {...calendarConfig}
-                    ref={calendarRef}
-                />
-
-            </div>
-
-        </div>
+        </>
     );
 }
 

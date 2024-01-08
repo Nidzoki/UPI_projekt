@@ -18,13 +18,14 @@ a {
   color: #bbbbbb;
   text-decoration: none;
 }
+
 a:hover {
   color: #ffffff;
 }
 
 body {
   margin: 0;
-  display:block;
+  display: block;
   place-items: center;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -47,23 +48,12 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #6068fe;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-/* 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
