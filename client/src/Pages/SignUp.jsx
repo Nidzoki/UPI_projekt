@@ -30,7 +30,7 @@ function Signup() {
     }
 
     function jeLiPopunjen(obj) {
-        return !Object.values(obj).some(element => element !== null); //vraća false ako je objekt prazan, provjeravamo je li korisnik unio podatke
+        return Object.values(obj).every(element => element !== null); //vraća false ako je objekt prazan, provjeravamo je li korisnik unio podatke
     }
 
 
@@ -40,7 +40,7 @@ function Signup() {
             if (confirmPassword == signUp_podaci.password) {
                 if (confirmPassword.length >= 8 && imaLiBroj(confirmPassword)) {
                     //provjeri je li username uzet -> napravi novog korisnika
-                    nav("/pocena")
+                    nav("/pocetna")
                 }
             }
             else {
@@ -50,6 +50,7 @@ function Signup() {
         }
         else{
             alert("Some fields were not filled");
+            console.log(confirmPassword)
         }
     }
 
@@ -83,9 +84,9 @@ function Signup() {
                     placeholder="Confirm password" style={{ width: '25%' }}
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
 
-                <label>Password has to be at least 16 characters to have one number</label><br />
+                <label>Password has to be at least 8 characters and have one number</label><br />
 
-                <button type="submit" style={{ backgroundColor: "#264c7e" }}>Sign up</button>
+                <button type="submit" style={{ backgroundColor: "#356fbf" }}>Sign up</button>
             </form>
 
             <p>Already have an account?</p>

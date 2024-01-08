@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Menu, Input, Button } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom"
 import "../App.css";
 
@@ -11,34 +11,40 @@ const NavUpperSch = (naziv) => {
         console.log('click ', e);
         setCurrent(e.key);
     };
-    const [nazivRasporeda, postaviNaziv] = useState(naziv);
+    const [nazivRasporeda, postaviNaziv] = useState(naziv.naziv);
 
     function NoviNaziv(event) {
         postaviNaziv(event.target.value);
+        console.log(nazivRasporeda);
+    }
+
+    function obrisiToken(){
+        console.log("token je obrisan!")
+    }
+
+    function saveData(){
+
     }
 
     return (
         <div id="navGornjaSch">
             <div id="gornjiLijevi">
-                <Button type={"primary"} >Save</Button>
+                <Button type={"primary"} onClick={saveData}>Save</Button>
                 <Button>Delete</Button>
                 <Input
                     id="imeRasporeda"
                     type="text"
                     name="name"
                     onChange={NoviNaziv}
+                    value={nazivRasporeda}
                     placeholder="Name of schedule"
                     style={{ width: "200px" }}
                 />
             </div>
 
             <Menu onClick={klik} selectedKeys={[current]} mode="horizontal" style={{ backgroundColor: "inherit", color: "white", paddingRight: "10px" }}>                
-                <Menu.Item key="user" icon={<UserOutlined />}>
-                    <Link to="/userSettings">User</Link>
-                </Menu.Item>
-
-                <Menu.Item key="logout" icon={<LogoutOutlined />}>
-                    <Link to="/"> Logout</Link>
+                <Menu.Item key="goBack" icon={<HomeOutlined />}onClick={obrisiToken}>
+                    <Link to="/pocetna"> Go back</Link>
                 </Menu.Item>
             </Menu>
         </div>

@@ -6,12 +6,10 @@ import LogIn from "./Pages/LogIn";
 import Pocetna from "./Pages/Pocetna";
 import FAQ from "./Pages/FAQ"
 import Payment from './Pages/Payment';
-import Services from './Pages/Services';
 import AboutUs from './Pages/AboutUs';
-import ChangePassword from "./Pages/ChangePassword"
 import MonthSchedule from "./Pages/MonthSchedule"
 import WeekSchedule from './Pages/WeekSchedule';
-import UserSettings from "./Pages/UserSettings"
+
 
 
 import './App.css'
@@ -49,11 +47,8 @@ function App() {
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/payment" element={<Payment />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/monthSchedule" element={<MonthSchedule />} />
           <Route path="/weekSchedule" element={<WeekSchedule/>}/> 
-          <Route path="/userSettings" element={<UserSettings />} />
         </Routes>
       </Router>
     </div>

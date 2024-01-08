@@ -46,9 +46,7 @@ function Login() {
                 <Input.Password name="password" value={logIn_podaci.password} onChange={promjenaPodataka}
                     placeholder="Password" style={{ width: '25%' }}
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-                <p><Link to="/changepassword">Forgot password?</Link></p> {/* postaviti kako prominiti lozinku */}
-
-                <button type="submit" style={{ backgroundColor: "264c7e" }}>Log In</button>
+                <button type="submit" style={{ backgroundColor: "#356fbf" }}>Log In</button>
             </form>
 
             <p>Don&#39;t have an account? Make one!</p>

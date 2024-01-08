@@ -122,7 +122,7 @@ ul {
   flex-direction: column;
   height: 100%;
   padding-top: 20px;
-  background-color: #1a4f98;
+  background-color: #264c7e;
 }
 
 /* -------------------navGornja------------------------- */
@@ -142,7 +142,7 @@ ul {
 /* ----------------------about us---------------------- */
 #aboutus{
   padding: 30px 0px;
-  background-color: #415A77;
+  background-color: #264c7e;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -173,7 +173,7 @@ ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #415A77;
+  background-color: #264c7e;
   padding: 20px;
   
 }
@@ -236,16 +236,11 @@ ul {
 
 
 /* -------------------------------weekSchedule-------------------------- */
-#gl{
-  background:linear-gradient(30deg, rgb(32, 57, 221), rgb(128, 223, 238) 40%, rgb(174, 0, 255));
-
-    max-width: 100%;
-    height:100vh;
-  };
-
-
+.calendar_default_cornerright_inner{
+  visibility: hidden;
+  background: inherit;
+}
   .calendar_default_event_inner {
-    background: #2e78d6;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -261,6 +256,9 @@ ul {
   margin:5px;
 }
 #mon, #day{
-  margin-top: 100px; 
+  margin: 10px; 
 }
 
+.ant-fullcalendar-month-panel .ant-fullcalendar-body table tbody tr:nth-child(6) {
+  display: none; /* ili postavite visibility: hidden; ili height: 0; ovisno o vašim zahtjevima */
+}

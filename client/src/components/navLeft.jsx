@@ -16,7 +16,7 @@ const NavLeft = () => {
         setCurrent(e.key);
     };
 
-    function promijeniNaziv(event){
+    function promijeniNaziv(event) {
         postaviNaziv(event.target.value);
     }
 
@@ -25,23 +25,14 @@ const NavLeft = () => {
     };
 
     function makeSchedule() {
-        if (typeofSchedule !== "") {
-            if (typeofSchedule == "Month") {
-                console.log(true)
-                nav("/monthSchedule", nazivRasporeda)
-            }
-            // else {
-            //     console.log(false)
-            //     nav("/weekSchedule")
-            // }
-        }
+        if (typeofSchedule == "Month") nav("/monthSchedule", {state: nazivRasporeda})
+        else nav("/weekSchedule", {state: nazivRasporeda})
     }
 
     function handleCancel() { setIsModalVisible(false) }
 
     function changeType(event) {
         setType(event.target.value)
-        console.log(event.target)
     }
 
     return (
@@ -69,22 +60,14 @@ const NavLeft = () => {
                 </Card>
             </Modal>
 
-            <Menu mode="vertical" onClick={onClick} selectedKeys={[current]} style={{ backgroundColor: 'inherit'}}>
+            <Menu mode="vertical" onClick={onClick} selectedKeys={[current]} style={{ backgroundColor: 'inherit' }}>
 
-                <Menu.Item key="created" icon={<UserOutlined />} style={{ color: "white" }}>
-                    Created by me
+                <Menu.Item key="month" icon={<UserOutlined />} style={{ color: "white" }}>
+                    Month Schedules
                 </Menu.Item>
 
-                <Menu.Item key="shared" icon={<TeamOutlined />} style={{ color: "white" }}>
-                    Shared with me
-                </Menu.Item>
-                
-                <Menu.Item key="week" style={{ color: "white" }}>
-                    Your week schedules
-                </Menu.Item>
-
-                <Menu.Item key="month" style={{ color: "white" }}>
-                    Your month schedules
+                <Menu.Item key="week" icon={<TeamOutlined />} style={{ color: "white" }}>
+                    Week Schedule
                 </Menu.Item>
             </Menu>
 
