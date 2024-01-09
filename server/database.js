@@ -38,22 +38,34 @@ export async function getUserByMail(userMail){
 
 export async function getUsersByName(userName){
     const [result] = await pool.query("SELECT * FROM users WHERE name = ?", [userName])
-    return result[0]
+    return result
 }
 export async function getUsersBySurname(userSurname){
     const [result] = await pool.query("SELECT * FROM users WHERE surname = ?", [userSurname])
-    return result[0]
+    return result
 }
 
 export async function getUsersOlderThan(userBirthday){
     const [result] = await pool.query("SELECT * FROM users WHERE birthday < ?", [userBirthday])
-    return result[0]
+    return result
 }
 
 export async function getUsersYoungerThan(userBirthday){
     const [result] = await pool.query("SELECT * FROM users WHERE birthday > ?", [userBirthday])
-    return result[0]
+    return result
 }
+
+export async function getUsersThatHaveBirthdayOn(userBirthday){
+    const [result] = await pool.query("SELECT * FROM users WHERE birthday = ?", [userBirthday])
+    return result
+}
+
+export async function getUserSchedules(userID){
+    const [result] = await pool.query("SELECT schedule FROM user_schedule WHERE user = ?", [userID])
+    return result
+}
+
+
 
 // CREATE new users
 
@@ -80,7 +92,16 @@ export async function deleteUser(userID){
 // UPDATE user info
 
 export async function updateUser(userID, name, surname, mail, password, birthday){
-   //not yet implemented
+   const [user] = await pool.query(`
+   UPDATE users
+   SET name = ?,   
+            surname = ?,
+            mail =?,
+            password = ?,
+            birthday = ?    
+   [WHERE ID = ?]
+   
+   `, [name, surname, mail, password, birthday, userID])
 }
 
 
@@ -100,6 +121,11 @@ export async function getSchedules(){
 export async function getScheduleById(scheduleID){
     const [result] = await pool.query("SELECT * FROM schedules WHERE id = ?", [scheduleID])
     return result[0]
+}
+
+export async function getScheduleEvents(scheduleID){
+    const [result] = await pool.query("SELECT event FROM schedule_event WHERE schedule = ?", [scheduleID])
+    return result
 }
 
 // CREATE new schedule
@@ -140,6 +166,11 @@ export async function getEvents(){
 export async function getEventById(eventID){
     const [result] = await pool.query("SELECT * FROM events WHERE id = ?", [eventID])
     return result[0]
+}
+
+export async function getEventReminders(eventID){
+    const [result] = await pool.query("SELECT reminder FROM event_reminder WHERE event = ?", [eventID])
+    return result
 }
 
 // CREATE new event
