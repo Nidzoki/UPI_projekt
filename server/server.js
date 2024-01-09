@@ -33,9 +33,9 @@ app.get('/users/:id/schedules', async (req, res) => { // gets all schedules crea
 })
 
 app.post('/users', async (req, res)=>{  // creates new user
-    const {name, surname, mail, password, birthday} = req.body
+    const {name, surname, mail, password, birthday, theme} = req.body
     if(getUserByMail(mail) === undefined) {
-        res.status(201).send(await createUser(name, surname, mail, password, birthday))
+        res.status(201).send(await createUser(name, surname, mail, password, birthday, theme))
     }
     else{
         console.log("User already exists")
@@ -45,7 +45,7 @@ app.post('/users', async (req, res)=>{  // creates new user
 })
 
 app.put('/users/updateUser/:id', async (req, res) => { // updates specific user 
-    res.send(updateUser(req.params.id, req.body.name, req.body.surname, req.body.mail, req.body.password, req.body.birthday))
+    res.send(updateUser(req.params.id, req.body.name, req.body.surname, req.body.mail, req.body.password, req.body.birthday, req.body.theme))
 })
 
 //SCHEDULE

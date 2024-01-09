@@ -69,11 +69,11 @@ export async function getUserSchedules(userID){
 
 // CREATE new users
 
-export async function createUser(name, surname, mail, password, birthday){
+export async function createUser(name, surname, mail, password, birthday, theme){
     const [user] = await pool.query(`
-    INSERT INTO users (name, surname, mail, password, birthday) 
+    INSERT INTO users (name, surname, mail, password, birthday, theme) 
     VALUES (?,?,?,?,?)
-    `, [name, surname, mail, password, birthday])
+    `, [name, surname, mail, password, birthday, theme])
     return getUserById(user.insertId)
     }
 
@@ -91,17 +91,18 @@ export async function deleteUser(userID){
 
 // UPDATE user info
 
-export async function updateUser(userID, name, surname, mail, password, birthday){
+export async function updateUser(userID, name, surname, mail, password, birthday, theme){
    const [user] = await pool.query(`
    UPDATE users
    SET name = ?,   
             surname = ?,
             mail =?,
             password = ?,
-            birthday = ?    
+            birthday = ?,
+            theme = ?
    [WHERE ID = ?]
    
-   `, [name, surname, mail, password, birthday, userID])
+   `, [name, surname, mail, password, birthday, theme, userID])
 }
 
 
