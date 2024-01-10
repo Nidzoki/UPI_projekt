@@ -2,7 +2,7 @@ import express from 'express'
 
 import {getUserById, getUserSchedules, getUsers, getUserByMail, createUser,deleteUser, updateUser} from './database.js'
 
-import {getScheduleById, getSchedules, getScheduleEvents} from './database.js'
+import {getScheduleById, getSchedules, getScheduleEvents, createSchedule} from './database.js'
 
 import {getEventById, getEvents, getEventReminders} from './database.js'
 
@@ -102,16 +102,29 @@ app.delete('/users/deleteUser/:id', async (req, res) => { // deletes specific us
 
 //SCHEDULE
 
-app.get('/schedules', async (req, res) => {
+app.get('/schedules', async (req, res) => { // gets all schedules --> solved
     res.send(await getSchedules())
 })
 
-app.get('/schedules/:id', async (req, res) => {
+app.get('/schedules/:id', async (req, res) => { // gets schedule by ID --> solved
     res.send(await getScheduleById(req.params.id))
 })
 
 app.get('/schedules/:id/events', async (req, res) => { // gets all events of specific schedule
     res.send(await getScheduleEvents(req.params.id))
+})
+
+app.post('/schedules', async (req, res) => { // creates a new schedule
+    const {userID, scheduleName, start, end, type} = req.body
+    
+    if(await getUserById(userID) === undefined) {
+        res.status(serverResponse_NotFound).send("User not found")
+    }
+    else{
+        res.status(serverResponse_OK).send(await createSchedule(userID, scheduleName, start, end, type))
+    }
+
+
 })
 
 //EVENT

@@ -132,9 +132,18 @@ export async function getScheduleEvents(scheduleID){
 
 // CREATE new schedule
 
-export async function createSchedule(){
-    console.log("not implemented yet")
-    return "not implemented yet"
+export async function createSchedule(userID, scheduleName, start, end, type){
+    
+    const [schedule] = await pool.query(`
+    INSERT INTO schedules (name, start, end, type) 
+    VALUES (?,?,?,?)
+    `, [scheduleName, start, end, type])
+    console.log(schedule)
+    const [result] = await pool.query(`
+    INSERT INTO user_schedule (schedule, user) 
+    VALUES (?,?)
+    `, [schedule.insertId, userID])
+    return getUserById(userID + schedule.id)
     }
 
 
