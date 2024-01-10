@@ -72,7 +72,7 @@ export async function getUserSchedules(userID){
 export async function createUser(name, surname, mail, password, birthday, theme){
     const [user] = await pool.query(`
     INSERT INTO users (name, surname, mail, password, birthday, theme) 
-    VALUES (?,?,?,?,?)
+    VALUES (?,?,?,?,?,?)
     `, [name, surname, mail, password, birthday, theme])
     return getUserById(user.insertId)
     }
@@ -100,9 +100,10 @@ export async function updateUser(userID, name, surname, mail, password, birthday
             password = ?,
             birthday = ?,
             theme = ?
-   [WHERE ID = ?]
+   WHERE ID = ?
    
    `, [name, surname, mail, password, birthday, theme, userID])
+   return user
 }
 
 
