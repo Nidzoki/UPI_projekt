@@ -19,7 +19,7 @@ const pool = mysql.createPool(
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
-// GET User data
+// GET User data ---> solved
 
 export async function getUsers(){   
     const [result] = await pool.query("SELECT * FROM users")
@@ -65,9 +65,14 @@ export async function getUserSchedules(userID){
     return result
 }
 
+export async function getUserThatOwnsSchedule(scheduleID){
+    const [result] = await pool.query("SELECT user FROM user_schedule WHERE schedule = ?", [scheduleID])
+    return result
+}
 
 
-// CREATE new users
+
+// CREATE new users ---> solved
 
 export async function createUser(name, surname, mail, password, birthday, theme){
     const [user] = await pool.query(`
@@ -78,18 +83,24 @@ export async function createUser(name, surname, mail, password, birthday, theme)
     }
 
 
-// DELETE users
+// DELETE users ---> solved
 
 export async function deleteUser(userID){
+
+    const [result] = await pool.query(`
+    DELETE FROM user_schedule
+    WHERE user = ?
+    `, [userID])
+
     const [user] = await pool.query(`
         DELETE FROM users
         WHERE ID = ?
     `, [userID])
-
+    
     return user
 }
 
-// UPDATE user info
+// UPDATE user info ---> solved
 
 export async function updateUser(userID, name, surname, mail, password, birthday, theme){
    const [user] = await pool.query(`
@@ -113,9 +124,9 @@ export async function updateUser(userID, name, surname, mail, password, birthday
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
-// GET Schedule data
+// GET Schedule data ---> solved
 
-export async function getSchedules(){   
+export async function getSchedules(){
     const [result] = await pool.query("SELECT * FROM schedules")
     return result
 }
@@ -125,12 +136,17 @@ export async function getScheduleById(scheduleID){
     return result[0]
 }
 
-export async function getScheduleEvents(scheduleID){
-    const [result] = await pool.query("SELECT event FROM schedule_event WHERE schedule = ?", [scheduleID])
+export async function getScheduleByName(scheduleName){
+    const [result] = await pool.query("SELECT * FROM schedules WHERE name = ?", [scheduleName])
     return result
 }
 
-// CREATE new schedule
+export async function getScheduleEvents(scheduleID){
+    const [result] = await pool.query("SELECT event FROM schedule_event WHERE schedule = ?", [scheduleID])
+    return result[0]
+}
+
+// CREATE new schedule --> solved
 
 export async function createSchedule(userID, scheduleName, start, end, type){
     
@@ -138,12 +154,13 @@ export async function createSchedule(userID, scheduleName, start, end, type){
     INSERT INTO schedules (name, start, end, type) 
     VALUES (?,?,?,?)
     `, [scheduleName, start, end, type])
-    console.log(schedule)
+    
     const [result] = await pool.query(`
     INSERT INTO user_schedule (schedule, user) 
     VALUES (?,?)
     `, [schedule.insertId, userID])
-    return getUserById(userID + schedule.id)
+
+    return getScheduleById(schedule.insertId)
     }
 
 

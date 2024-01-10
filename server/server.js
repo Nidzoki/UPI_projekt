@@ -1,8 +1,8 @@
 import express from 'express'
 
-import {getUserById, getUserSchedules, getUsers, getUserByMail, createUser,deleteUser, updateUser} from './database.js'
+import {getUserById, getUserSchedules, getUsers, getUserByMail, getUserThatOwnsSchedule, createUser,deleteUser, updateUser} from './database.js'
 
-import {getScheduleById, getSchedules, getScheduleEvents, createSchedule} from './database.js'
+import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule} from './database.js'
 
 import {getEventById, getEvents, getEventReminders} from './database.js'
 
@@ -107,25 +107,50 @@ app.get('/schedules', async (req, res) => { // gets all schedules --> solved
     res.send(await getSchedules())
 })
 
-app.get('/schedules/:id', async (req, res) => { // gets schedule by ID --> solved
+app.get('/schedules/searchById/:id', async (req, res) => { // gets schedule by ID --> solved
     res.send(await getScheduleById(req.params.id))
 })
 
-app.get('/schedules/:id/events', async (req, res) => { // gets all events of specific schedule
+app.get('/schedules/searchByName/:name', async (req, res) => { // gets schedule by name --> solved
+    res.send(await getScheduleByName(req.params.name))
+})
+
+app.get('/schedules/:id/events', async (req, res) => { // gets all events of specific schedule --> solved
     res.send(await getScheduleEvents(req.params.id))
 })
 
-app.post('/schedules', async (req, res) => { // creates a new schedule
+app.post('/schedules', async (req, res) => { // creates a new schedule --> solved
     const {userID, scheduleName, start, end, type} = req.body
-    
+
     if(await getUserById(userID) === undefined) {
-        res.status(serverResponse_NotFound).send("User not found")
+        res.status(serverResponse_NotFound).send("User not found") 
     }
     else{
-        res.status(serverResponse_OK).send(await createSchedule(userID, scheduleName, start, end, type))
+        const userSchedules = await getUserSchedules(userID) // uzimam sve rasporede korisnika
+
+        let isThereSameNameSchedules = false    // za sada se nijedan ne podudara po imenu
+
+        for(let i = 0; i < userSchedules.length; i++) {
+            const schedule = await getScheduleById(userSchedules[i].schedule)
+            if(schedule.name === scheduleName){
+                isThereSameNameSchedules = true
+            }
+        }
+
+        if(isThereSameNameSchedules === true){
+            res.status(serverResponse_Conflict).send("Schedule with this name already exists")
+        }
+        else{
+            res.status(serverResponse_OK).send(await createSchedule(userID, scheduleName, start, end, type)) 
+        }
+        
     }
 
 
+})
+
+app.put('/schedules', async (req, res) =>{ // --> curently working on...
+    res.send("not yet implemented")
 })
 
 //EVENT
@@ -160,5 +185,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(8080, () => {
-    console.log('listening on port 8080')
+    console.log('now you can see your beautiful bugs in HD on port 8080')
 })
