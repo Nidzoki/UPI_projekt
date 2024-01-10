@@ -75,6 +75,7 @@ app.post('/users', async (req, res)=>{  // creates new user --> solved
     }
 })
 
+// NAPOMENA -----> Nije moguće mijenjati mail korsnika jer se onda logika previse zakomplicira
 app.put('/users/updateUser/:id', async (req, res) => { // updates specific user --> solved 
     
     const user = await getUserById(req.params.id)
