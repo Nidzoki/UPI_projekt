@@ -6,7 +6,7 @@ import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, cre
 
 import {getEventById, getEvents, getEventReminders} from './database.js'
 
-import {getReminderById, getReminders} from './database.js'
+import {getReminderById, getReminders, deleteReminder} from './database.js'
 
 const serverResponse_OK = 200
 const serverResponse_Created = 201
@@ -91,7 +91,7 @@ app.put('/users/updateUser/:id', async (req, res) => { // updates specific user 
     }
 })
 
-app.delete('/users/deleteUser/:id', async (req, res) => { // deletes specific user --> solved
+app.delete('/users/deleteUser/:id', async (req, res) => { // deletes specific user --> yet to implement deletion of user schedules
 
     if(await getUserById(req.params.id) === undefined){
         res.status(serverResponse_NotFound).send("User not found")
@@ -130,17 +130,19 @@ app.post('/schedules', async (req, res) => { // creates a new schedule --> solve
 
         let isThereSameNameSchedules = false    // za sada se nijedan ne podudara po imenu
 
-        for(let i = 0; i < userSchedules.length; i++) {
+        for(let i = 0; i < userSchedules.length; i++) { // ali trazim koji se podudara
+
             const schedule = await getScheduleById(userSchedules[i].schedule)
-            if(schedule.name === scheduleName){
+
+            if(schedule.name === scheduleName){ // nasao sam ga pa mijenjam istinitost
                 isThereSameNameSchedules = true
             }
         }
 
-        if(isThereSameNameSchedules === true){
+        if(isThereSameNameSchedules === true){ // ako se podudara = ne moze
             res.status(serverResponse_Conflict).send("Schedule with this name already exists")
         }
-        else{
+        else{ // ako se ne podudara = pravi novi
             res.status(serverResponse_OK).send(await createSchedule(userID, scheduleName, start, end, type)) 
         }
         
@@ -149,8 +151,30 @@ app.post('/schedules', async (req, res) => { // creates a new schedule --> solve
 
 })
 
-app.put('/schedules', async (req, res) =>{ // --> curently working on...
-    res.send("not yet implemented")
+app.put('/schedules/updateSchedule/:id', async (req, res) =>{ // --> curently working on...
+
+    const schedule = await getScheduleById(req.params.id)
+
+    if(schedule === undefined){
+        res.status(serverResponse_NotFound).send("Schedule not found")
+    }
+    else{
+        res.status(serverResponse_Gone).send("Not implemented yet")
+    }
+    
+})
+
+app.delete('/schedules/deleteSchedule/:id', async (req, res) =>{ // --> curently working on...
+
+    const schedule = await getScheduleById(req.params.id)
+
+    if(schedule === undefined){
+        res.status(serverResponse_NotFound).send("Schedule not found")
+    }
+    else{
+        res.status(serverResponse_Gone).send("Not implemented yet")
+    }
+    
 })
 
 //EVENT
@@ -159,7 +183,7 @@ app.get('/events', async (req, res) => {
     res.send(await getEvents())
 })
 
-app.get('/events/:id', async (req, res) => {
+app.get('/events/searchById/:id', async (req, res) => {
     res.send(await getEventById(req.params.id))
 })
 
@@ -177,6 +201,18 @@ app.get('/reminders/:id', async (req, res) => {
     res.send(await getReminderById(req.params.id))
 })
 
+app.delete('/reminders/deleteReminder/:id', async (req, res) =>{ // --> curently working on...
+
+    const reminder = await getReminderById(req.params.id)
+    if(reminder === undefined){
+        res.status(serverResponse_NotFound).send("Reminder not found")
+    }
+    else{
+        res.status(serverResponse_OK).send(await deleteReminder(req.params.id))
+    }
+    
+})
+
 
 
 app.use((err, req, res, next) => {
@@ -185,5 +221,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(8080, () => {
-    console.log('now you can see your beautiful bugs in HD on port 8080')
+    console.log('\nyour bugs have been displayed in 4K 60fps on port 8080, I sure hope you know what you are doing...')
 })

@@ -166,16 +166,38 @@ export async function createSchedule(userID, scheduleName, start, end, type){
 
 // DELETE schedule
 
-export async function deleteSchedule(){
-    console.log("not implemented yet")
-    return "not implemented yet"
+export async function deleteSchedule(scheduleID){
+    const [result] = await pool.query(`
+    DELETE FROM user_schedule
+    WHERE schedule = ?
+    `, [scheduleID])
+
+    const [schedule] = await pool.query(`
+        DELETE FROM schedule
+        WHERE ID = ?
+    `, [scheduleID])
+
+    const [result2] = await pool.query(`
+        DELETE FROM schedule_event
+        WHERE ID = ?
+    `, [scheduleID])
+    
+    return schedule
     }
 
 // UPDATE schedule info
 
-export async function updateSchedule(){
-    console.log("not implemented yet")
-    return "not implemented yet"
+export async function updateSchedule(name, start, end, type, scheduleID){
+    const [schedule] = await pool.query(`
+    UPDATE schedules
+    SET     name = ?,   
+            start = ?,
+            end =?,
+            type = ?
+    WHERE ID = ?
+   
+    `, [name, start, end, type, scheduleID])
+    return schedule
     }
 
 ///////////////////////////////////////////////////////////
@@ -232,29 +254,50 @@ export async function updateEvent(){
 
 // GET Reminder data
 
-export async function getReminders(){   
+export async function getReminders(){   // --> solved
     const [result] = await pool.query("SELECT * FROM reminders")
     return result
 }
 
-export async function getReminderById(reminderID){
-    const [result] = await pool.query("SELECT * FROM reminders WHERE id = ?", [reminderID])
+export async function getReminderById(reminderID){ // --> solved
+    const [result] = await pool.query("SELECT * FROM reminders WHERE ID = ?", [reminderID])
     return result[0]
 }
 
+
+
 // CREATE new reminder
 
-export async function createReminder(){
-    console.log("not implemented yet")
-    return "not implemented yet"
+export async function createReminder(eventID, time){ // --> not yet tested
+    const [reminder] = await pool.query(`
+    INSERT INTO reminders (time) 
+    VALUES (?)
+    `, [time])
+    
+    const [result] = await pool.query(`
+    INSERT INTO event_reminders (reminder, event) 
+    VALUES (?,?)
+    `, [reminder.insertId, eventID])
+
+    return getScheduleById(schedule.insertId)
     }
 
 
 // DELETE reminder
 
-export async function deleteReminder(){
-    console.log("not implemented yet")
-    return "not implemented yet"
+export async function deleteReminder(reminderID){ // --> solved
+    
+    const [reminder] = await pool.query(`
+        DELETE FROM reminders
+        WHERE ID = ?
+    `, [reminderID])
+    
+    const [result] = await pool.query(`
+        DELETE FROM event_reminder
+        WHERE reminder = ?
+    `, [reminderID])
+        
+    return reminder
     }
 
 // UPDATE reminder info
