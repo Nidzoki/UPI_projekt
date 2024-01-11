@@ -197,18 +197,24 @@ app.get('/reminders', async (req, res) => {
     res.send(await getReminders())
 })
 
-app.get('/reminders/:id', async (req, res) => {
-    res.send(await getReminderById(req.params.id))
+app.get('/reminders/:id', async (req, res) => { // --> Solved
+    const reminder = await getReminderById(req.params.id)
+    if(reminder === undefined) {
+        res.status(serverResponse_NotFound).send("Reminder does not exist")
+    }
+    else{
+        res.status(serverResponse_OK).send(await getReminderById(req.params.id))
+    }
 })
 
-app.delete('/reminders/deleteReminder/:id', async (req, res) =>{ // --> curently working on...
+app.delete('/reminders/deleteReminder/:id', async (req, res) =>{ // --> Solved
 
     const reminder = await getReminderById(req.params.id)
     if(reminder === undefined){
         res.status(serverResponse_NotFound).send("Reminder not found")
     }
     else{
-        res.status(serverResponse_OK).send(await deleteReminder(req.params.id))
+        res.status(serverResponse_OK).send(await delereteReminder(req.params.id))
     }
     
 })
@@ -221,5 +227,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(8080, () => {
-    console.log('\nyour bugs have been displayed in 4K 60fps on port 8080, I sure hope you know what you are doing...')
+    console.log('\nyour bugs have been displayed in 4K 60fps on port 8080,\nI sure hope you know what you are doing...')
 })
