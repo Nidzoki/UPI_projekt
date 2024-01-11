@@ -27,7 +27,7 @@ export async function getUsers(){
 }
 
 export async function getUserById(userID){
-    const [result] = await pool.query("SELECT * FROM users WHERE id = ?", [userID])
+    const [result] = await pool.query("SELECT * FROM users WHERE ID = ?", [userID])
     return result[0]
 }
 
@@ -132,7 +132,7 @@ export async function getSchedules(){
 }
 
 export async function getScheduleById(scheduleID){
-    const [result] = await pool.query("SELECT * FROM schedules WHERE id = ?", [scheduleID])
+    const [result] = await pool.query("SELECT * FROM schedules WHERE ID = ?", [scheduleID])
     return result[0]
 }
 
@@ -214,7 +214,7 @@ export async function getEvents(){
 }
 
 export async function getEventById(eventID){
-    const [result] = await pool.query("SELECT * FROM events WHERE id = ?", [eventID])
+    const [result] = await pool.query("SELECT * FROM events WHERE ID = ?", [eventID])
     return result[0]
 }
 
@@ -275,11 +275,11 @@ export async function createReminder(eventID, time){ // --> not yet tested
     `, [time])
     
     const [result] = await pool.query(`
-    INSERT INTO event_reminders (reminder, event) 
+    INSERT INTO event_reminder (reminder, event) 
     VALUES (?,?)
     `, [reminder.insertId, eventID])
 
-    return getScheduleById(schedule.insertId)
+    return getReminderById(reminder.insertId)
     }
 
 
@@ -302,7 +302,11 @@ export async function deleteReminder(reminderID){ // --> solved
 
 // UPDATE reminder info
 
-export async function updateReminder(){
-    console.log("not implemented yet")
-    return "not implemented yet"
+export async function updateReminder(reminderID, time){
+    const [reminder] = await pool.query(`
+    UPDATE reminders
+    SET time = ?
+    WHERE ID = ?
+   `, [time, reminderID])
+   return reminder
     }

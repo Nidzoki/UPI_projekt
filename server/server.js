@@ -6,13 +6,16 @@ import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, cre
 
 import {getEventById, getEvents, getEventReminders} from './database.js'
 
-import {getReminderById, getReminders, deleteReminder} from './database.js'
+import {getReminderById, getReminders, deleteReminder, updateReminder, createReminder} from './database.js'
 
 const serverResponse_OK = 200
 const serverResponse_Created = 201
 const serverResponse_NotFound = 404
 const serverResponse_Conflict = 409
 const serverResponse_Gone = 410
+const serverResponse_InternalServerError = 500
+
+const port_number = 8080
 
 const app = express()
 
@@ -207,6 +210,31 @@ app.get('/reminders/:id', async (req, res) => { // --> Solved
     }
 })
 
+app.post('/reminders', async (req, res)=>{  // creates new reminder --> currently working on
+
+    const {eventID, time} = req.body
+    
+    if(await getEventById(eventID) === undefined) {
+        res.status(serverResponse_NotFound).send("Event doesn't exist")
+    }
+    else{
+        res.status(serverResponse_Created).send(await createReminder(eventID, time))
+    }
+})
+
+app.put('/reminders/updateReminder/:id', async (req, res) =>{ // --> solved
+
+    const reminder = await getReminderById(req.params.id)
+
+    if(reminder === undefined){
+        res.status(serverResponse_NotFound).send("Schedule not found")
+    }
+    else{
+        res.status(serverResponse_OK).send(await updateReminder(req.params.id, req.body.time))
+    }
+    
+})
+
 app.delete('/reminders/deleteReminder/:id', async (req, res) =>{ // --> Solved
 
     const reminder = await getReminderById(req.params.id)
@@ -219,13 +247,13 @@ app.delete('/reminders/deleteReminder/:id', async (req, res) =>{ // --> Solved
     
 })
 
-
+// Touch NOTHING behind this line
 
 app.use((err, req, res, next) => {
     console.error(err.stack)
-    res.status(500).send("Something broke!")
+    res.status(serverResponse_InternalServerError).send("Something broke!")
 })
 
-app.listen(8080, () => {
+app.listen(port_number, () => {
     console.log('\nyour bugs have been displayed in 4K 60fps on port 8080,\nI sure hope you know what you are doing...')
 })
