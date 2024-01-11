@@ -214,7 +214,7 @@ app.delete('/reminders/deleteReminder/:id', async (req, res) =>{ // --> Solved
         res.status(serverResponse_NotFound).send("Reminder not found")
     }
     else{
-        res.status(serverResponse_OK).send(await delereteReminder(req.params.id))
+        res.status(serverResponse_OK).send(await deleteReminder(req.params.id))
     }
     
 })
