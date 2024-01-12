@@ -29,8 +29,6 @@ const NavUpperSch = (naziv) => {
     return (
         <div id="navGornjaSch">
             <div id="gornjiLijevi">
-                <Button type={"primary"} onClick={saveData}>Save</Button>
-                <Button>Delete</Button>
                 <Input
                     id="imeRasporeda"
                     type="text"
@@ -40,6 +38,7 @@ const NavUpperSch = (naziv) => {
                     placeholder="Name of schedule"
                     style={{ width: "200px" }}
                 />
+                <Button>Delete</Button>
             </div>
 
             <Menu onClick={klik} selectedKeys={[current]} mode="horizontal" style={{ backgroundColor: "inherit", color: "white", paddingRight: "10px" }}>                
