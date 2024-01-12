@@ -143,7 +143,7 @@ export async function getScheduleByName(scheduleName){
 
 export async function getScheduleEvents(scheduleID){
     const [result] = await pool.query("SELECT event FROM schedule_event WHERE schedule = ?", [scheduleID])
-    return result[0]
+    return result
 }
 
 // CREATE new schedule --> solved
@@ -151,50 +151,50 @@ export async function getScheduleEvents(scheduleID){
 export async function createSchedule(userID, scheduleName, start, end, type){
     
     const [schedule] = await pool.query(`
-    INSERT INTO schedules (name, start, end, type) 
-    VALUES (?,?,?,?)
+        INSERT INTO schedules (name, start, end, type) 
+        VALUES (?,?,?,?)
     `, [scheduleName, start, end, type])
     
     const [result] = await pool.query(`
-    INSERT INTO user_schedule (schedule, user) 
-    VALUES (?,?)
+        INSERT INTO user_schedule (schedule, user) 
+        VALUES (?,?)
     `, [schedule.insertId, userID])
 
     return getScheduleById(schedule.insertId)
     }
 
 
-// DELETE schedule
+// DELETE schedule --> solved
 
 export async function deleteSchedule(scheduleID){
     const [result] = await pool.query(`
-    DELETE FROM user_schedule
-    WHERE schedule = ?
+        DELETE FROM user_schedule
+        WHERE schedule = ?
     `, [scheduleID])
 
     const [schedule] = await pool.query(`
-        DELETE FROM schedule
+        DELETE FROM schedules
         WHERE ID = ?
     `, [scheduleID])
 
     const [result2] = await pool.query(`
         DELETE FROM schedule_event
-        WHERE ID = ?
+        WHERE schedule = ?
     `, [scheduleID])
     
     return schedule
     }
 
-// UPDATE schedule info
+// UPDATE schedule info -> currently working on...
 
 export async function updateSchedule(name, start, end, type, scheduleID){
     const [schedule] = await pool.query(`
-    UPDATE schedules
-    SET     name = ?,   
+        UPDATE schedules
+        SET name = ?,   
             start = ?,
             end =?,
             type = ?
-    WHERE ID = ?
+        WHERE ID = ?
    
     `, [name, start, end, type, scheduleID])
     return schedule
@@ -227,13 +227,13 @@ export async function getEventReminders(eventID){ // --> solved
 
 export async function createEvent(scheduleID, name, start, end){ // --> solved
     const [event] = await pool.query(`
-    INSERT INTO events (name, start, end) 
-    VALUES (?,?,?)
+        INSERT INTO events (name, start, end) 
+        VALUES (?,?,?)
     `, [name, start, end])
     
     const [result] = await pool.query(`
-    INSERT INTO schedule_event (event, schedule) 
-    VALUES (?,?)
+        INSERT INTO schedule_event (event, schedule) 
+        VALUES (?,?)
     `, [event.insertId, scheduleID])
 
     return getEventById(event.insertId)

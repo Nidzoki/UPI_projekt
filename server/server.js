@@ -3,7 +3,7 @@ import express from 'express'
 
 import {getUserById, getUserSchedules, getUsers, getUserByMail, createUser,deleteUser, updateUser} from './database.js' // still have work to do
 
-import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule} from './database.js' // still have work to do
+import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule, updateSchedule, deleteSchedule} from './database.js' // still have work to do
 
 import {getEventById, getEvents, getEventReminders, createEvent, updateEvent, deleteEvent} from './database.js' // currently working on
 
@@ -108,19 +108,40 @@ app.delete('/users/deleteUser/:id', async (req, res) => { // deletes specific us
 //SCHEDULE --> paused until events are fully functional
 
 app.get('/schedules', async (req, res) => { // gets all schedules --> solved
-    res.send(await getSchedules())
+    res.status(serverResponse_OK).send(await getSchedules())
 })
 
 app.get('/schedules/searchById/:id', async (req, res) => { // gets schedule by ID --> solved
-    res.send(await getScheduleById(req.params.id))
+    const schedule = await getScheduleById(req.params.id)
+
+    if(schedule === undefined){
+        res.status(serverResponse_NotFound).send("Schedule doesn't exist")
+    }
+    else{
+        res.status(serverResponse_OK).send(schedule)
+    }
 })
 
 app.get('/schedules/searchByName/:name', async (req, res) => { // gets schedule by name --> solved
-    res.send(await getScheduleByName(req.params.name))
+
+    const schedule = await getScheduleByName(req.params.name)
+
+    if(schedule === undefined){
+        res.status(serverResponse_NotFound).send("Schedule doesn't exist")
+    }
+    else{
+        res.status(serverResponse_OK).send(schedule)
+    }
 })
 
 app.get('/schedules/:id/events', async (req, res) => { // gets all events of specific schedule --> solved
-    res.send(await getScheduleEvents(req.params.id))
+    
+    if(await getScheduleById(req.params.id) === undefined){
+        res.status(serverResponse_NotFound).send("Schedule doesn't exist")
+    }
+    else{
+        res.status(serverResponse_OK).send(await getScheduleEvents(req.params.id))
+    }
 })
 
 app.post('/schedules', async (req, res) => { // creates a new schedule --> solved
@@ -168,7 +189,7 @@ app.put('/schedules/updateSchedule/:id', async (req, res) =>{ // --> curently wo
     
 })
 
-app.delete('/schedules/deleteSchedule/:id', async (req, res) =>{ // --> curently working on...
+app.delete('/schedules/deleteSchedule/:id', async (req, res) =>{ // --> solved
 
     const schedule = await getScheduleById(req.params.id)
 
@@ -176,9 +197,26 @@ app.delete('/schedules/deleteSchedule/:id', async (req, res) =>{ // --> curently
         res.status(serverResponse_NotFound).send("Schedule not found")
     }
     else{
-        res.status(serverResponse_Gone).send("Not implemented yet")
+        // delete all events connected to this schedule
+        const events = await getScheduleEvents(req.params.id)
+        
+        console.log(events)
+
+        for(let i = 0; i < events.length; i++){ // delete every event in schedule
+            // foreach event delete his reminders
+            const reminders = await getEventReminders(events[i].event)
+        
+            for(let j = 0; j < reminders.length; j++){
+                await deleteReminder(reminders[j].reminder)
+            }
+
+            // then delete the event
+        
+            await deleteEvent(events[i].event)
+        }
+        // then delete the schedule
+        res.status(serverResponse_OK).send(await deleteSchedule(req.params.id))
     }
-    
 })
 
 //EVENT --> SOLVED COMPLETELY
