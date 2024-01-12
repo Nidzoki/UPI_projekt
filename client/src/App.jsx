@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import HomePage from './Pages/HomePage';
 import SignUp from './Pages/SignUp';
 import LogIn from "./Pages/LogIn";
 import Pocetna from "./Pages/Pocetna";
@@ -9,6 +9,7 @@ import Payment from './Pages/Payment';
 import AboutUs from './Pages/AboutUs';
 import MonthSchedule from "./Pages/MonthSchedule"
 import WeekSchedule from './Pages/WeekSchedule';
+import UserSettings from './Pages/userSettings';
 
 
 
@@ -49,6 +50,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/monthSchedule" element={<MonthSchedule />} />
           <Route path="/weekSchedule" element={<WeekSchedule/>}/> 
+          <Route path="/userSettings" element={<UserSettings/>}/> 
         </Routes>
       </Router>
     </div>
