@@ -1,7 +1,7 @@
 
 import express from 'express'
 
-import {getUserById, getUserSchedules, getUsers, getUserByMail, createUser,deleteUser, updateUser} from './database.js' // still have work to do
+import {getUserById, getUserSchedules, getUsers, getUserByMail, getUserThatOwnsSchedule, createUser,deleteUser, updateUser} from './database.js' // still have work to do
 
 import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule, updateSchedule, deleteSchedule} from './database.js' // still have work to do
 
@@ -105,7 +105,7 @@ app.delete('/users/deleteUser/:id', async (req, res) => { // deletes specific us
     }
 })
 
-//SCHEDULE --> paused until events are fully functional
+//SCHEDULE --> SOLVED COMPLETELY
 
 app.get('/schedules', async (req, res) => { // gets all schedules --> solved
     res.status(serverResponse_OK).send(await getSchedules())
@@ -176,17 +176,45 @@ app.post('/schedules', async (req, res) => { // creates a new schedule --> solve
 
 })
 
-app.put('/schedules/updateSchedule/:id', async (req, res) =>{ // --> curently working on...
+app.put('/schedules/updateSchedule/:id', async (req, res) =>{ // --> solved
 
     const schedule = await getScheduleById(req.params.id)
 
     if(schedule === undefined){
         res.status(serverResponse_NotFound).send("Schedule not found")
     }
-    else{
-        res.status(serverResponse_Gone).send("Not implemented yet")
+    else
+    {
+        if(req.body.name === schedule.name){
+            res.status(serverResponse_OK).send(await updateSchedule(req.body.name, req.body.start, req.body.end, req.body.type, req.params.id))
+        }
+        else
+        {
+            const user = (await getUserThatOwnsSchedule(req.params.id))
+
+            const userSchedules = await getUserSchedules(user.user) // uzimam sve rasporede korisnika
+
+            let isThereSameNameSchedules = false    // za sada se nijedan ne podudara po imenu
+
+            for(let i = 0; i < userSchedules.length; i++) { // ali trazim koji se podudara
+
+                const schedule = await getScheduleById(userSchedules[i].schedule)
+
+                if(schedule.name === req.body.name){ // nasao sam ga pa mijenjam istinitost
+                    isThereSameNameSchedules = true
+                    console.log("isti rasporedi")
+                }
+            }
+
+            if(isThereSameNameSchedules === true){
+                res.status(serverResponse_Conflict).send("Schedule with the same name already exist")
+            }
+            else
+            {
+                res.status(serverResponse_OK).send(await updateSchedule(req.body.name, req.body.start, req.body.end, req.body.type, req.params.id))
+            }
+        }
     }
-    
 })
 
 app.delete('/schedules/deleteSchedule/:id', async (req, res) =>{ // --> solved

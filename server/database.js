@@ -67,7 +67,7 @@ export async function getUserSchedules(userID){
 
 export async function getUserThatOwnsSchedule(scheduleID){
     const [result] = await pool.query("SELECT user FROM user_schedule WHERE schedule = ?", [scheduleID])
-    return result
+    return result[0]
 }
 
 
@@ -76,8 +76,8 @@ export async function getUserThatOwnsSchedule(scheduleID){
 
 export async function createUser(name, surname, mail, password, birthday, theme){
     const [user] = await pool.query(`
-    INSERT INTO users (name, surname, mail, password, birthday, theme) 
-    VALUES (?,?,?,?,?,?)
+        INSERT INTO users (name, surname, mail, password, birthday, theme) 
+        VALUES (?,?,?,?,?,?)
     `, [name, surname, mail, password, birthday, theme])
     return getUserById(user.insertId)
     }
@@ -88,8 +88,8 @@ export async function createUser(name, surname, mail, password, birthday, theme)
 export async function deleteUser(userID){
 
     const [result] = await pool.query(`
-    DELETE FROM user_schedule
-    WHERE user = ?
+        DELETE FROM user_schedule
+        WHERE user = ?
     `, [userID])
 
     const [user] = await pool.query(`
@@ -103,16 +103,15 @@ export async function deleteUser(userID){
 // UPDATE user info ---> solved
 
 export async function updateUser(userID, name, surname, mail, password, birthday, theme){
-   const [user] = await pool.query(`
-   UPDATE users
-   SET name = ?,   
+    const [user] = await pool.query(`
+        UPDATE users
+        SET name = ?,   
             surname = ?,
             mail =?,
             password = ?,
             birthday = ?,
             theme = ?
-   WHERE ID = ?
-   
+        WHERE ID = ?
    `, [name, surname, mail, password, birthday, theme, userID])
    return user
 }
@@ -120,7 +119,7 @@ export async function updateUser(userID, name, surname, mail, password, birthday
 
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
-//               SCHEDULE DATA MANIPULATION
+//               SCHEDULE DATA MANIPULATION                --> SOLVED COMPLETLY
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
@@ -185,7 +184,7 @@ export async function deleteSchedule(scheduleID){
     return schedule
     }
 
-// UPDATE schedule info -> currently working on...
+// UPDATE schedule info -> solved
 
 export async function updateSchedule(name, start, end, type, scheduleID){
     const [schedule] = await pool.query(`
@@ -298,13 +297,13 @@ export async function getReminderById(reminderID){ // --> solved
 
 export async function createReminder(eventID, time){ // --> solved
     const [reminder] = await pool.query(`
-    INSERT INTO reminders (time) 
-    VALUES (?)
+        INSERT INTO reminders (time) 
+        VALUES (?)
     `, [time])
     
     const [result] = await pool.query(`
-    INSERT INTO event_reminder (reminder, event) 
-    VALUES (?,?)
+        INSERT INTO event_reminder (reminder, event) 
+        VALUES (?,?)
     `, [reminder.insertId, eventID])
 
     return getReminderById(reminder.insertId)
