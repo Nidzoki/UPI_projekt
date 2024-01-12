@@ -202,53 +202,81 @@ export async function updateSchedule(name, start, end, type, scheduleID){
 
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
-//               EVENT DATA MANIPULATION
+//               EVENT DATA MANIPULATION                   --> SOLVED COMPLETELY
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
 // GET Event data
 
-export async function getEvents(){   
+export async function getEvents(){   // --> solved
     const [result] = await pool.query("SELECT * FROM events")
     return result
 }
 
-export async function getEventById(eventID){
+export async function getEventById(eventID){ // --> solved
     const [result] = await pool.query("SELECT * FROM events WHERE ID = ?", [eventID])
     return result[0]
 }
 
-export async function getEventReminders(eventID){
+export async function getEventReminders(eventID){ // --> solved
     const [result] = await pool.query("SELECT reminder FROM event_reminder WHERE event = ?", [eventID])
     return result
 }
 
 // CREATE new event
 
-export async function createEvent(){
-    console.log("not implemented yet")
-    return "not implemented yet"
-    }
+export async function createEvent(scheduleID, name, start, end){ // --> solved
+    const [event] = await pool.query(`
+    INSERT INTO events (name, start, end) 
+    VALUES (?,?,?)
+    `, [name, start, end])
+    
+    const [result] = await pool.query(`
+    INSERT INTO schedule_event (event, schedule) 
+    VALUES (?,?)
+    `, [event.insertId, scheduleID])
 
-
-// DELETE event
-
-export async function deleteEvent(){
-    console.log("not implemented yet")
-    return "not implemented yet"
+    return getEventById(event.insertId)
     }
 
 // UPDATE event info
 
-export async function updateEvent(){
-    console.log("not implemented yet")
-    return "not implemented yet"
+export async function updateEvent(eventID, name, start, end){  // --> solved
+    const [event] = await pool.query(`
+        UPDATE events
+        SET name = ?,
+            start = ?,
+            end = ?
+        WHERE ID = ?
+   `, [name, start, end, eventID])
+   return event
+    }
+
+// DELETE event
+
+export async function deleteEvent(eventID){ // --> solved
+    const [event] = await pool.query(`
+        DELETE FROM events
+        WHERE ID = ?
+    `, [eventID])
+    
+    const [result] = await pool.query(`
+        DELETE FROM event_reminder
+        WHERE event = ?
+    `, [eventID])
+
+    const [result2] = await pool.query(`
+        DELETE FROM schedule_event
+        WHERE event = ?
+    `, [eventID])
+        
+    return event
     }
 
 
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
-//               REMINDER DATA MANIPULATION
+//               REMINDER DATA MANIPULATION                ---> SOLVED COMPLETELY
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
@@ -268,7 +296,7 @@ export async function getReminderById(reminderID){ // --> solved
 
 // CREATE new reminder
 
-export async function createReminder(eventID, time){ // --> not yet tested
+export async function createReminder(eventID, time){ // --> solved
     const [reminder] = await pool.query(`
     INSERT INTO reminders (time) 
     VALUES (?)
@@ -282,6 +310,17 @@ export async function createReminder(eventID, time){ // --> not yet tested
     return getReminderById(reminder.insertId)
     }
 
+
+// UPDATE reminder info
+
+export async function updateReminder(reminderID, time){ // --> solved
+    const [reminder] = await pool.query(`
+        UPDATE reminders
+        SET time = ?
+        WHERE ID = ?
+   `, [time, reminderID])
+   return reminder
+    }
 
 // DELETE reminder
 
@@ -298,15 +337,4 @@ export async function deleteReminder(reminderID){ // --> solved
     `, [reminderID])
         
     return reminder
-    }
-
-// UPDATE reminder info
-
-export async function updateReminder(reminderID, time){
-    const [reminder] = await pool.query(`
-    UPDATE reminders
-    SET time = ?
-    WHERE ID = ?
-   `, [time, reminderID])
-   return reminder
     }

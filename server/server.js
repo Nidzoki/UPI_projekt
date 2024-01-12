@@ -1,12 +1,13 @@
+
 import express from 'express'
 
-import {getUserById, getUserSchedules, getUsers, getUserByMail, getUserThatOwnsSchedule, createUser,deleteUser, updateUser} from './database.js'
+import {getUserById, getUserSchedules, getUsers, getUserByMail, createUser,deleteUser, updateUser} from './database.js' // still have work to do
 
-import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule} from './database.js'
+import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule} from './database.js' // still have work to do
 
-import {getEventById, getEvents, getEventReminders} from './database.js'
+import {getEventById, getEvents, getEventReminders, createEvent, updateEvent, deleteEvent} from './database.js' // currently working on
 
-import {getReminderById, getReminders, deleteReminder, updateReminder, createReminder} from './database.js'
+import {getReminderById, getReminders, createReminder, updateReminder, deleteReminder} from './database.js' //--> solved
 
 const serverResponse_OK = 200
 const serverResponse_Created = 201
@@ -21,7 +22,7 @@ const app = express()
 
 app.use(express.json())
 
-// USER API --> SOLVED COMPLETELY
+// USER API --> SOLVED COMPLETELY exception = deleteUser() needs upgrade once every other segment is finished
 
 app.get('/users', async (req, res) => { // gets all users --> solved
     
@@ -104,7 +105,7 @@ app.delete('/users/deleteUser/:id', async (req, res) => { // deletes specific us
     }
 })
 
-//SCHEDULE
+//SCHEDULE --> paused until events are fully functional
 
 app.get('/schedules', async (req, res) => { // gets all schedules --> solved
     res.send(await getSchedules())
@@ -180,27 +181,86 @@ app.delete('/schedules/deleteSchedule/:id', async (req, res) =>{ // --> curently
     
 })
 
-//EVENT
+//EVENT --> SOLVED COMPLETELY
 
-app.get('/events', async (req, res) => {
-    res.send(await getEvents())
+app.get('/events', async (req, res) => { // --> solved
+    res.status(serverResponse_OK).send(await getEvents())
 })
 
-app.get('/events/searchById/:id', async (req, res) => {
-    res.send(await getEventById(req.params.id))
+app.get('/events/searchById/:id', async (req, res) => { // --> solved
+    const event = await getEventById(req.params.id)
+    if(event === undefined){
+        res.status(serverResponse_NotFound).send("Event doesn't exist")
+    }
+    else{
+        res.status(serverResponse_OK).send(event)
+    }
+    
 })
 
-app.get('/events/:id/reminders', async (req, res) => { // gets all reminders of specific event
-    res.send(await getEventReminders(req.params.id))
+app.get('/events/:id/reminders', async (req, res) => { // gets all reminders of specific event ---> solved
+    if(await getEventById(req.params.id) === undefined){
+        res.status(serverResponse_NotFound).send("Event doesn't exist")
+    }
+    else{
+        res.status(serverResponse_OK).send(await getEventReminders(req.params.id))
+    }
+    
 })
 
-//REMINDER
+app.post('/events', async (req, res)=>{  // creates new event --> solved
 
-app.get('/reminders', async (req, res) => {
-    res.send(await getReminders())
+    const {scheduleID, name, start, end} = req.body
+    
+    if(await getScheduleById(scheduleID) === undefined) {
+        res.status(serverResponse_NotFound).send("Schedule doesn't exist")
+    }
+    else{
+        res.status(serverResponse_Created).send(await createEvent(scheduleID, name, start, end))
+    }
 })
 
-app.get('/reminders/:id', async (req, res) => { // --> Solved
+app.put('/events/updateEvent/:id', async (req, res) =>{ // --> solved
+
+    const event = await getEventById(req.params.id)
+
+    if(event === undefined){
+        res.status(serverResponse_NotFound).send("Event not found")
+    }
+    else{
+        res.status(serverResponse_OK).send(await updateEvent(req.params.id, req.body.name, req.body.start, req.body.end))
+    }
+    
+})
+
+app.delete('/events/deleteEvent/:id', async (req, res) =>{ // --> solved
+    
+    const event = await getEventById(req.params.id)
+
+    if(event === undefined){
+        res.status(serverResponse_NotFound).send("Event not found")
+    }
+    else{
+        // delete all reminders connected to this event
+        const reminders = await getEventReminders(req.params.id)
+        
+        for(let i = 0; i < reminders.length; i++){
+            await deleteReminder(reminders[i].reminder)
+        }
+
+        // then delete the event
+        res.status(serverResponse_OK).send(await deleteEvent(req.params.id))
+    }
+    
+})
+
+//REMINDER  --> SOLVED COMPLETELY
+
+app.get('/reminders', async (req, res) => { // --> solved
+    res.status(serverResponse_OK).send(await getReminders())
+})
+
+app.get('/reminders/:id', async (req, res) => { // --> solved
     const reminder = await getReminderById(req.params.id)
     if(reminder === undefined) {
         res.status(serverResponse_NotFound).send("Reminder does not exist")
@@ -210,7 +270,7 @@ app.get('/reminders/:id', async (req, res) => { // --> Solved
     }
 })
 
-app.post('/reminders', async (req, res)=>{  // creates new reminder --> currently working on
+app.post('/reminders', async (req, res)=>{  // creates new reminder --> solved
 
     const {eventID, time} = req.body
     
@@ -227,7 +287,7 @@ app.put('/reminders/updateReminder/:id', async (req, res) =>{ // --> solved
     const reminder = await getReminderById(req.params.id)
 
     if(reminder === undefined){
-        res.status(serverResponse_NotFound).send("Schedule not found")
+        res.status(serverResponse_NotFound).send("Reminder not found")
     }
     else{
         res.status(serverResponse_OK).send(await updateReminder(req.params.id, req.body.time))
@@ -235,7 +295,7 @@ app.put('/reminders/updateReminder/:id', async (req, res) =>{ // --> solved
     
 })
 
-app.delete('/reminders/deleteReminder/:id', async (req, res) =>{ // --> Solved
+app.delete('/reminders/deleteReminder/:id', async (req, res) =>{ // --> solved
 
     const reminder = await getReminderById(req.params.id)
     if(reminder === undefined){
