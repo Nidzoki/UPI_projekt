@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+
 dist
 dist-ssr
 *.local
@@ -22,3 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+/server/
+/mysqlIDBsave/
+ReadMeB4YouStartCoding.txt
+run_first_time.bat
+run.bat
+client/vite.config.js
+README.md
+index.html
+client/.eslintrc.cjs
+main.jsx
+index.css
+/pic/

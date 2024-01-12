@@ -1,21 +1,75 @@
 import { useState } from 'react';
-import { Button, Calendar, Card, Modal } from 'antd';
+import { Button, Calendar, Card, Modal, Input, Radio, Badge } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import NavUpper from '../components/NavUpperSch';
-import "../App.css"
+import '../App.css';
 
-const Mjesecni = () => {
+const kalendarStil = {
+    height: 'auto',
+    width: '1200px',
+    margin: 'auto',
+    marginTop: '20px',
+    padding: '10px',
+};
+
+const radioStil = {
+    borderRadius: "100%",
+    width: "10px",
+    height: "10px"
+}
+
+const margina = {
+    margin: "5px"
+}
+
+function Mjesecni() {
     const [selectedDate, setSelectedDate] = useState(null);
-    const [events, setEvents] = useState({
-        key:0,
-        date:"",
-        about:"",
-        color:""
-    });
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [selectedEventIndex, setSelectedEventIndex] = useState(null);
+    const [events, setEvents] = useState([]);
 
-    const handleDateSelect = value => {
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const [addEvent, setAddEvent] = useState(false);
+    const [eventName, setEventName] = useState({
+        id: 0,
+        title: "",
+        description: "",
+        date: "",
+        type: "none",
+    });
+
+    const [editEvent, setEditEvent] = useState();
+    const [checkIfEdit, setChecker] = useState(false);
+    
+    function editElement(index) {
+        const eventToEdit = events.find((day) => day.id === index);
+        console.log(eventToEdit);
+        handleDeleteEvent(index);
+        setEditEvent(eventToEdit);
+        setChecker(true)
+        setAddEvent(true);
+    }
+
+    const handleAddEvent = () => {
+        if (selectedDate !== null) {
+            if (checkIfEdit) {
+                setChecker(false)
+                setEventName(...editEvent)
+                setAddEvent(true)
+            }
+            else{
+            setEventName({
+                id: events.length,
+                title: "",
+                description: "",
+                date: selectedDate,
+                type: "none"
+            })}
+            setAddEvent(true);
+        }
+    };
+
+
+    const handleDateSelect = (value) => {
         const formattedDate = value.format('DD. MM. YYYY.');
         setSelectedDate(formattedDate);
         setIsModalVisible(true);
@@ -23,104 +77,140 @@ const Mjesecni = () => {
 
     const handleCancel = () => {
         setIsModalVisible(false);
-        setSelectedEventIndex(null);
     };
 
 
-    const handleAddEvent = () => {
-        if (selectedDate !== null) {
-            const newEvent = { details: 'Event details' };
-            const updatedEvents = { ...events };
-
-            if (updatedEvents[selectedDate]) {
-                updatedEvents[selectedDate].push(newEvent);
-            } else {
-                updatedEvents[selectedDate] = [newEvent];
-            }
-
+    function handleDeleteEvent(index) {
+        const broj = events.findIndex(day => day.id === index);
+        if (broj !== -1) {
+            const updatedEvents = [...events];
+            updatedEvents.splice(broj, 1);
             setEvents(updatedEvents);
         }
-    };
+    }
 
-    const handleDeleteEvent = () => {
-        if (selectedDate !== null && selectedEventIndex !== null) {
-            const updatedEvents = { ...events };
-            updatedEvents[selectedDate].splice(selectedEventIndex, 1);
-            setEvents(updatedEvents);
-            setSelectedEventIndex(null);
+
+    const handleOk = () => {
+        if (eventName.title !== "") {
+            console.log(eventName);
+            setAddEvent(false);
+            setEventName({ ...eventName, date: selectedDate });
+            setEvents([...events, eventName])
+            
         }
-    };
+        else { alert("You need to put title so you can make new event") }
+    }
 
-    const CellRender = value => {
+    function handleCancelAdd() {
+        setEventName({
+            id: 0,
+            title: "",
+            description: "",
+            date: "",
+            type: "none",
+        })
+        setAddEvent(false)
+    }
+
+
+    const CellRender = (value) => {
         const formattedDate = value.format('DD. MM. YYYY.');
-        const eventsForDate = events[formattedDate];
+        const matchingDays = events.filter((day) => day.date === formattedDate);
 
-        if (eventsForDate && eventsForDate.length > 0) {
+        if (matchingDays.length > 0) {
             return (
-                <div>
-                    {eventsForDate.map((event, index) => (
-                        <div key={index} className="event-indicator">
-                            <span className="event-dot" />
-                        </div>
+                <ul className="events">
+                    {matchingDays.map((item) => (
+                        <li key={item.id}>
+                            <Badge status={item.type} text={item.title} />
+                        </li>
                     ))}
-                </div>
+                </ul>
             );
         }
 
         return null;
-    };
+    }
 
-    const kalendarStil = {
-        height: 'auto',
-        width: '600px',
-        margin: 'auto',
-        marginTop: '20px',
-    };
+
+
+    function promjenaPodataka(event) {
+        const { name, value } = event.target;
+        setEventName({ ...eventName, [name]: value });
+    }
+
+    function boja(tip) {
+        switch (tip) {
+            case "default":
+                return "blue"
+            case "success":
+                return "green";
+            case "warning":
+                return "orange";
+            case "error":
+                return "red";
+        }
+
+    }
 
     return (
         <div className="tablica">
             <NavUpper id="navSchGornja" />
-            <Calendar id="kalendar" onSelect={handleDateSelect} CellRender={CellRender} style={kalendarStil} />
+            <Calendar id="kalendar" onSelect={handleDateSelect} cellRender={CellRender} style={kalendarStil} />
 
             {selectedDate && (
                 <Modal
-                    title={`Događaji za ${selectedDate}: `}
-                    visible={isModalVisible}
+                    title={`Events on ${selectedDate} `}
+                    open={isModalVisible}
                     onCancel={handleCancel}
                     footer={[
-                        <Button key="cancel" onClick={handleCancel}>
-                            Zatvori
-                        </Button>,
-                        <Button key="addNew" onClick={handleAddEvent}>
-                            Dodaj događaj
-                        </Button>,
-                    ]}
-                >
-                    {events[selectedDate] && events[selectedDate].length > 0 ? (
-                        events[selectedDate].map((event, index) => (
-                            <Card key={index} title={`Event ${index + 1}`}>
-                                <p>{event.details}</p>
-                                <Button
-                                    type="danger"
-                                    icon={<DeleteOutlined />}
-                                    onClick={() => setSelectedEventIndex(index)}
-                                >
-                                    Izbriši
-                                </Button>
-                            </Card>
-                        ))
-                    ) : (
-                        <p>Nema događaja za ovaj datum</p>
-                    )}
-                    {selectedEventIndex !== null && (
-                        <Button type="danger" onClick={handleDeleteEvent}>
-                            Potvrdi brisanje
-                        </Button>
-                    )}
+                        <Button key="cancel" onClick={handleCancel}> Cancel </Button>,
+                        <Button key="addNew" onClick={handleAddEvent}> Add event</Button>,
+                    ]}>
+                    {addEvent && (
+                        <form style={{ height: "200px", border: "1px solid #d3d3d3", borderRadius: "10px" }}>
+                            <Input type="text" name="title" value={eventName.title} onChange={promjenaPodataka}
+                                placeholder="Event name" style={{ width: '95%', margin: "5px" }} />
+
+                            <Input type="text" name="description" placeholder="Description" value={eventName.description} onChange={promjenaPodataka}
+                                style={{ width: '95%', height: "30%", margin: "5px", alignSelf: "center" }} />
+                            <Radio.Group onChange={promjenaPodataka} name="type" style={{ margin: "5px" }}>
+                                <Radio value="default"><div style={{ ...radioStil, backgroundColor: 'blue' }} /></Radio>
+                                <Radio value="success"><div style={{ ...radioStil, backgroundColor: 'green' }} /></Radio>
+                                <Radio value="warning"><div style={{ ...radioStil, backgroundColor: 'orange' }} /></Radio>
+                                <Radio value="error"><div style={{ ...radioStil, backgroundColor: 'red' }} /></Radio>
+                            </Radio.Group> <br />
+
+                            <Button type="primary" onClick={handleOk}
+                                style={margina}>Ok</Button>
+
+                            <Button onClick={handleCancelAdd} style={margina}>Cancel</Button>
+                        </form>)}
+
+                    {events.map((day) => {
+                        if (day.date === selectedDate) {
+
+                            return (
+                                <Card key={day.id} title={day.title}>
+                                    {day.type !== "none" && (
+                                        <div style={{ ...radioStil, backgroundColor: boja(day.type) }}></div>
+                                    )}
+                                    <p>{day.description}</p>
+                                    <Button type="primary" onClick={() => editElement(day.id)} style={margina}>Edit event</Button>
+                                    <Button icon={<DeleteOutlined />} onClick={() => handleDeleteEvent(day.id)} style={margina}>
+                                        Delete
+                                    </Button>
+                                </Card>
+                            );
+                        }
+                        return null;
+                    })}
                 </Modal>
             )}
+
+
         </div>
     );
-};
+}
 
 export default Mjesecni;
