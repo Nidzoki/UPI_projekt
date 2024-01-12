@@ -1,72 +1,62 @@
-import { UserOutlined, SearchOutlined, BellOutlined } from '@ant-design/icons';
-import { Menu, Input } from 'antd';
+import { SearchOutlined, NotificationOutlined, LogoutOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
+import { Menu, Input, Dropdown, Space, } from 'antd';
 import { useState } from 'react';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "../App.css"
-const children = [
 
-    {
-        type: 'not2', label: 'Item 1', children: [
-            {
-                label: 'Option 1',
-                key: 'setting:1',
-            },
-            {
-                label: 'Option 2',
-                key: 'setting:2',
-            },
-        ],
-    },
-    {
-        type: 'not2',
-        label: 'Item 2',
-        children: [
-            {
-                label: 'Option 3',
-                key: 'setting:3',
-            },
-            {
-                label: 'Option 4',
-                key: 'setting:4',
-            },
-        ],
-    },
-]
+
 const NavUpper = () => {
-    const [current, setCurrent] = useState('mail');
-    const onClick = (e) => {
-        console.log('click ', e);
-        setCurrent(e.key);
-    };
 
     const [search, setSearch] = useState("");
+    const nav = useNavigate();
+
 
     function Searching(event) {
         setSearch(event.target.value)
     }
+
+    function obrisiToken(e) {
+        if (e.key == "logout") {
+            console.log("token je obrisan")
+            nav("/")
+        }
+    }
     return (
         <div id="navGornja">
-            <Input id="inputGornjaNav" type="text" name="name" value={search} onChange={Searching}
-                placeholder="Search schedules" style={{ width: '50%', float: "left" }} icon={<SearchOutlined />} />
-            <Menu id="menuGornjaNav" onClick={onClick} selectedKeys={[current]} mode="horizontal" style={{ backgroundColor: "transparent" }}>
+            <Input id="inputGornjaNav" type="text" name="search" value={search} onChange={Searching}
+                placeholder="Search for schedules" style={{ width: '40%', height: "70%", float: "left", marginTop: "10px" }} icon={<SearchOutlined />} />
 
-                <Menu.SubMenu key="s" icon={<BellOutlined />} title="Notifications">
-                    {children.map(item => (
-                        <Menu.Item key={item.label}>
-                            <Link to={`/${item.label.toLowerCase()}`}>{item.label}</Link>
+            <Menu style={{ backgroundColor: "inherit", color: "white", marginTop: "15px" }}>
+                <Dropdown style={{ margin: "200px" }} overlay={<Menu>
+                    <Link to="/payment"><Menu.Item key="pro" >Get PRO version</Menu.Item></Link>
+                    <Menu.Item key="update">Updates</Menu.Item>
+                </Menu>}>
+                    <a>
+                        <Space style={{ color: "white", marginRight: "20px" }}>
+                            <NotificationOutlined /> Notifications
+                        </Space>
+                    </a>
+                </Dropdown>
+                <Dropdown overlay={
+                    <Menu onClick={obrisiToken}>
+                        <Menu.Item key="logout" icon={<LogoutOutlined />}>
+                            Logout
                         </Menu.Item>
-                    ))}
-                </Menu.SubMenu>
-                <Menu.SubMenu key="s" icon={<UserOutlined />} title="Settings">
-                    {children.map(item => (
-                        <Menu.Item key={item.label}>
-                            <Link to={`/${item.label.toLowerCase()}`}>{item.label}</Link>
+                        <Menu.Item key="user" icon={<SettingOutlined />}>
+                            <Link to="/userSettings">Settings</Link>
                         </Menu.Item>
-                    ))}
-                </Menu.SubMenu>
+                    </Menu>}>
+                    <a>
+                        <Space style={{ color: "white" }}>
+                            <UserOutlined /> User
+                        </Space>
+                    </a>
+
+                </Dropdown>
             </Menu>
-        </div>
+        </div >
 
     )
 };
 export default NavUpper;
+

@@ -39,7 +39,7 @@
 }
 
 .logoSlika {
-  width: 25%;
+  width: 20%;
   height: auto;
 }
 
@@ -107,14 +107,6 @@ ul {
   align-items: center;
 }
 
-.forme input {
-  margin: 10px;
-  padding: 20px;
-}
-
-.forme span {
-  margin: 10px;
-}
 
 /* -----------------------navLeft-------------------- */
 #navLeft {
@@ -122,6 +114,10 @@ ul {
   flex-direction: column;
   height: 100%;
   padding-top: 20px;
+  background-color: #264c7e;
+  position: fixed;
+  width: 200px;
+  top:0
 }
 
 /* -------------------navGornja------------------------- */
@@ -129,6 +125,13 @@ ul {
   float: right;
   display: flex;
   justify-content: space-between;
+  background-color: #356fbf;
+  padding-right: 30px;
+  position: fixed;
+  top: 0;
+  left: 200px;
+  width:calc(100vw - 230px);
+  height: 47px
 }
 
 #inputGornjaNav {
@@ -138,32 +141,33 @@ ul {
 }
 
 /* ----------------------about us---------------------- */
-#aboutus{
+#aboutus {
   padding: 30px 0px;
-  background-color: #415A77;
+  background-color: #264c7e;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
-#aboutusTijelo{
+
+#aboutusTijelo {
   display: flex;
   flex-direction: row;
   max-width: 70%;
   justify-content: space-between;
   padding: 30px 0px;
- }
+}
 
-#aboutusTijelo img{
+#aboutusTijelo img {
   width: 40%;
   height: auto;
   margin-right: 20px;
 }
 
-#aboutusTijelo p{
+#aboutusTijelo p {
   display: flex;
   align-items: center;
-} 
+}
 
 /*-----------------------faq--------------------------- */
 #faqTijelo {
@@ -171,9 +175,9 @@ ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #415A77;
+  background-color: #264c7e;
   padding: 20px;
-  
+
 }
 
 #faqTijelo h1,
@@ -183,32 +187,33 @@ ul {
   margin: 10px;
 }
 
-#faqTijelo .ant-btn{
+#faqTijelo .ant-btn {
   background-color: #E0E1DD;
   width: 40%;
   align-items: flex-start;
 }
 
-#faqTijelo h2{
+#faqTijelo h2 {
   align-items: flex-start;
 }
 
 /* --------------------pocetna-------------------------------- */
 #pocetna {
   display: grid;
-  grid-template-areas: 
-  "navigacijaLijeva navigacijaGornja"
+  grid-template-areas:
+    "navigacijaLijeva navigacijaGornja"
     "navigacijaLijeva pocetnaTijelo";
-    grid-template-rows: 50px 1fr;
-    grid-template-columns: 200px 1fr;
+  grid-template-rows: 50px 1fr;
+  grid-template-columns: 200px 1fr;
   height: 100vh;
+  grid-area: pocetnaTijelo;
 }
 
 #navLeft {
   grid-area: navigacijaLijeva;
 }
 
-#navGornja{
+#navGornja {
   grid-area: navigacijaGornja;
 }
 
@@ -218,12 +223,15 @@ ul {
 
 /* ---------------------------monthSchedule---------------------- */
 
-#navGornjaSch{
+#navGornjaSch {
   display: flex;
   justify-content: space-between;
+  background-color: #27497a;
+
 }
 
-#gornjiLijevi button, #gornjiLijevi input{
+#gornjiLijevi button,
+#gornjiLijevi input {
   margin: 5px;
 }
 
@@ -233,31 +241,136 @@ ul {
 
 
 /* -------------------------------weekSchedule-------------------------- */
-#gl{
-  background:linear-gradient(30deg, rgb(32, 57, 221), rgb(128, 223, 238) 40%, rgb(174, 0, 255));
+.calendar_default_cornerright_inner {
+  visibility: hidden;
+  background: inherit;
+}
 
-    max-width: 100%;
-    height:100vh;
-  };
+.calendar_default_event_inner {
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 10pt;
+  padding: 5px;
+  opacity: 0.8;
+}
 
-
-  .calendar_default_event_inner {
-    background: #2e78d6;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 10pt;
-    padding: 5px;
-    opacity: 0.8;
-  }
-#botuni{
+#botuni {
   margin-top: 50px;
-  
+
 }
- #gl button{
-  margin:5px;
+
+#gl button {
+  margin: 5px;
 }
-#mon, #day{
-  margin-top: 100px;
-  
+
+#mon,
+#day {
+  margin: 10px;
+}
+
+.ant-fullcalendar-month-panel .ant-fullcalendar-body table tbody tr:nth-child(6) {
+  display: none;
+}
+
+/* ---------------------------------------userSettings------------------------------------------- */
+
+#navUpperUser {
+  grid-area: navUpperUser;
+  background-color: #356fbf;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+  padding-right: 10px;
+  height: 47px;
+  position: fixed;
+  top: 0;
+  left: 200px;
+  width:calc(100vw - 210px);
+}
+
+#settingsTijelo {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 200px 400px; 
+  grid-template-rows: repeat(6, 50px);
+  gap: 10px; 
+  justify-content: center;
+}
+
+#settingsTijelo p{
+  justify-self: right;
+}
+
+
+/* ----------------------------------blagica------------------------------------- */
+#sadrzaj {
+  background-color: #264c7e;
+  background-blend-mode: screen, color-dodge, overlay, difference, normal;
+  display: flex;
+  justify-content: space-evenly;
+
+}
+
+.element {
+  padding: 10px;
+  margin: 20px;
+  margin-bottom: 20px;
+  width: 20%;
+  border: 3px solid blue;
+  border-radius: 5%;
+  box-shadow: 0px 10px 10px 5px;
+
+}
+
+
+hr {
+  width: 80%;
+  border-bottom: 2px solid ivory;
+  box-shadow: 0px 2px 2px 1px;
+  margin-top: 10px;
+}
+
+
+.element ol li {
+  margin: 0;
+  padding: 20px 0 20px 30px;
+  list-style: none;
+  background-image: url("src/pic/star.png");
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: 20px;
+
+}
+
+
+.element ol li::before {
+  animation: 3s linear 1s infinite spin;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.element li {
+  list-style: url('/src/pick/star.png');
+  text-align: left;
+  align-items: center;
+  font-size: 1.05em;
+}
+
+.element button {
+  background-color: #cdc2fb;
+  border-width: 0;
+  box-shadow: rgba(25, 25, 25, 0.04) 0 0 1px 0, rgba(0, 0, 0, 0.1) 0 3px 4px 0;
+  cursor: pointer;
+  display: inline-block;
+  transition: all 200ms;
 }

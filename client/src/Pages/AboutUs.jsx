@@ -19,7 +19,7 @@ function AboutUs() {
             to delivering the best, leveraging our unique talents to make your journey with us truly outstanding.
           </p>
         </div>
-      
+
       </div>
 
       <Footer />

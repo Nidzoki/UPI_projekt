@@ -1,61 +1,49 @@
 import { useState } from 'react';
 import { Menu, Input, Button } from 'antd';
-import { UserOutlined, BellOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom"
 import "../App.css";
 
-const userSettings = [
-    {
-        key: 'notification', icon: <BellOutlined />,
-        children: [
-            {
-               key: "setting1", label: 'Item 1'
-            },
-            {
-                key: "setting2", label: 'Item 2'
-             },
-        ],
-    }, {
-        key: 'userSettings', icon: <UserOutlined />,
-        children: [{
-            key: "checkSettings", label: 'Check settings'
-         },
-         {
-             key: "logout", label: 'Log out'
-          },
-        ],
-    }
-];
 
-
-const NavUpperSch = () => {
+const NavUpperSch = (naziv) => {
     const [current, setCurrent] = useState('mail');
     const klik = (e) => {
         console.log('click ', e);
         setCurrent(e.key);
     };
-    const [naziv, postaviNaziv] = useState('');
+
+    const [nazivRasporeda, postaviNaziv] = useState(naziv.naziv);
 
     function NoviNaziv(event) {
         postaviNaziv(event.target.value);
+        console.log(nazivRasporeda);
     }
+
+    function obrisiToken() {
+        console.log("token je obrisan!")
+    }
+
 
     return (
         <div id="navGornjaSch">
             <div id="gornjiLijevi">
-                <Button type={"primary"}>Save changes</Button>
-                <Button>Delete schedule</Button>
                 <Input
                     id="imeRasporeda"
                     type="text"
                     name="name"
-                    value={naziv}
                     onChange={NoviNaziv}
+                    value={nazivRasporeda}
                     placeholder="Name of schedule"
                     style={{ width: "200px" }}
                 />
+                <Button>Delete</Button>
             </div>
 
-            <Menu id="menuGornjaNav" onClick={klik} selectedKeys={[current]} mode="horizontal" items={userSettings} style={{ backgroundColor: "transparent" }}/>
+            <Menu onClick={klik} selectedKeys={[current]} mode="horizontal" style={{ backgroundColor: "inherit", color: "white", paddingRight: "10px" }}>
+                <Menu.Item key="goBack" icon={<HomeOutlined />} onClick={obrisiToken}>
+                    <Link to="/pocetna"> Go back</Link>
+                </Menu.Item>
+            </Menu>
         </div>
     );
 };
