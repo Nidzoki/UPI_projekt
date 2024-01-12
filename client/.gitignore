@@ -30,8 +30,6 @@ run_first_time.bat
 run.bat
 client/vite.config.js
 README.md
-package.json
-package-lock.json
 index.html
 client/.eslintrc.cjs
 main.jsx
