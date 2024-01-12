@@ -37,7 +37,37 @@ function Mjesecni() {
         type: "none",
     });
 
+    const [editEvent, setEditEvent] = useState();
+    const [checkIfEdit, setChecker] = useState(false);
     
+    function editElement(index) {
+        const eventToEdit = events.find((day) => day.id === index);
+        console.log(eventToEdit);
+        handleDeleteEvent(index);
+        setEditEvent(eventToEdit);
+        setChecker(true)
+        setAddEvent(true);
+    }
+
+    const handleAddEvent = () => {
+        if (selectedDate !== null) {
+            if (checkIfEdit) {
+                setChecker(false)
+                setEventName(...editEvent)
+                setAddEvent(true)
+            }
+            else{
+            setEventName({
+                id: events.length,
+                title: "",
+                description: "",
+                date: selectedDate,
+                type: "none"
+            })}
+            setAddEvent(true);
+        }
+    };
+
 
     const handleDateSelect = (value) => {
         const formattedDate = value.format('DD. MM. YYYY.');
@@ -45,28 +75,10 @@ function Mjesecni() {
         setIsModalVisible(true);
     };
 
-
-    // const handleMonthClick = (value) => {
-    //     setModalVisible(true);
-    //     setSelectedMonth(value);
-    // };
-
     const handleCancel = () => {
         setIsModalVisible(false);
     };
 
-    const handleAddEvent = () => {
-        if (selectedDate !== null) {
-            setEventName({
-                id: events.length,
-                title: "",
-                description: "",
-                date: selectedDate,
-                type: "none"
-            })
-            setAddEvent(true);
-        }
-    };
 
     function handleDeleteEvent(index) {
         const broj = events.findIndex(day => day.id === index);
@@ -80,9 +92,11 @@ function Mjesecni() {
 
     const handleOk = () => {
         if (eventName.title !== "") {
+            console.log(eventName);
             setAddEvent(false);
             setEventName({ ...eventName, date: selectedDate });
             setEvents([...events, eventName])
+            
         }
         else { alert("You need to put title so you can make new event") }
     }
@@ -97,7 +111,6 @@ function Mjesecni() {
         })
         setAddEvent(false)
     }
-
 
 
     const CellRender = (value) => {
@@ -183,7 +196,7 @@ function Mjesecni() {
                                         <div style={{ ...radioStil, backgroundColor: boja(day.type) }}></div>
                                     )}
                                     <p>{day.description}</p>
-                                    <Button type="primary" style={margina}>Edit event</Button>
+                                    <Button type="primary" onClick={() => editElement(day.id)} style={margina}>Edit event</Button>
                                     <Button icon={<DeleteOutlined />} onClick={() => handleDeleteEvent(day.id)} style={margina}>
                                         Delete
                                     </Button>
