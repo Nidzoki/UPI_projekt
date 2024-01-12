@@ -39,7 +39,7 @@ function Mjesecni() {
 
     const [editEvent, setEditEvent] = useState();
     const [checkIfEdit, setChecker] = useState(false);
-    
+
     function editElement(index) {
         const eventToEdit = events.find((day) => day.id === index);
         console.log(eventToEdit);
@@ -56,14 +56,15 @@ function Mjesecni() {
                 setEventName(...editEvent)
                 setAddEvent(true)
             }
-            else{
-            setEventName({
-                id: events.length,
-                title: "",
-                description: "",
-                date: selectedDate,
-                type: "none"
-            })}
+            else {
+                setEventName({
+                    id: events.length,
+                    title: "",
+                    description: "",
+                    date: selectedDate,
+                    type: "none"
+                })
+            }
             setAddEvent(true);
         }
     };
@@ -96,7 +97,7 @@ function Mjesecni() {
             setAddEvent(false);
             setEventName({ ...eventName, date: selectedDate });
             setEvents([...events, eventName])
-            
+
         }
         else { alert("You need to put title so you can make new event") }
     }
@@ -155,7 +156,7 @@ function Mjesecni() {
 
     return (
         <div className="tablica">
-            <NavUpper id="navSchGornja" />
+            <NavUpper />
             <Calendar id="kalendar" onSelect={handleDateSelect} cellRender={CellRender} style={kalendarStil} />
 
             {selectedDate && (

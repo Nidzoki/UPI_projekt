@@ -9,13 +9,13 @@ function HomePage() {
 
   return (
     <div className='homePage'>
-      <Header/>
-      
+      <Header />
+
       <div id='zagljavlje'>
-        <img src={appLogo} className="logoSlika" />
+        <img src={appLogo} className="logoSlika" style={{width:"25%"}}/>
         <h2>Seize control of your time with our schedule app – where planning meets simplicity!</h2>
         <Link to="/signup">
-          <Button type="primary" style={{ backgroundColor: "#E0E1DD", color: "black", height:"40px", inlineSize: "200px", fontSize:"17px"}}>Sign up, it&#39;s free!</Button>
+          <Button type="primary" style={{ backgroundColor: "#E0E1DD", color: "black", height: "40px", inlineSize: "200px", fontSize: "17px" }}>Sign up, it&#39;s free!</Button>
         </Link>
       </div>
 
@@ -57,7 +57,7 @@ function HomePage() {
             <p>Never miss an important meeting or deadline again. Receive timely reminders and notifications to keep you on track.</p>
           </div>
         </div>
-        
+
       </div>
 
       <Footer />

@@ -1,4 +1,4 @@
-import './Pages.css'
+import '../App.css'
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import {Link} from "react-router-dom"

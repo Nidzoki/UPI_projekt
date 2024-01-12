@@ -5,6 +5,11 @@ import { useNavigate, Link } from 'react-router-dom';
 import "../App.css";
 import appLogo from "../pic/logo-as1.png";
 
+const stilSignUp={
+    width: "25%",
+    marginBottom:"20px"
+}
+
 
 function Login() {
 
@@ -41,12 +46,12 @@ function Login() {
             <h2>Welcome back!</h2>
             <form onSubmit={provjeriPosalji} className="forme">
                 <Input type="email" name="email" value={logIn_podaci.email} onChange={promjenaPodataka}
-                    placeholder="Email" style={{ width: '25%' }} />
+                    placeholder="Email" style={stilSignUp} />
 
                 <Input.Password name="password" value={logIn_podaci.password} onChange={promjenaPodataka}
-                    placeholder="Password" style={{ width: '25%' }}
+                    placeholder="Password" style={stilSignUp}
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-                <button type="submit" style={{ backgroundColor: "#356fbf" }}>Log In</button>
+                <button type="submit" style={{ backgroundColor: "#E0E1DD", color: "black"}}>Log In</button>
             </form>
 
             <p>Don&#39;t have an account? Make one!</p>

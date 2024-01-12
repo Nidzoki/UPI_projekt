@@ -56,7 +56,7 @@ function Faq() {
         <Button classname="faqBotun" icon={<PlusOutlined />} onClick={() => toggle('functionalities')}> What functionalities does the Adapt Schedule offer? </Button>
         {paragraph['functionalities'] && (
           <p>Adapt Schedule offers you to: personalize scheduling to meet your unique needs and preferences, collaborate with friends, family, or colleagues on shared schedules,
-            set personalized notifications and reminders for important dates or tasks, intuitive and easy-to-navigate interface for efficient schedule management and 
+            set personalized notifications and reminders for important dates or tasks, intuitive and easy-to-navigate interface for efficient schedule management and
             Effectively manage tasks with features such as deadlines, priorities, and completion tracking.
           </p>
         )}
@@ -100,21 +100,21 @@ function Faq() {
 
         <Button icon={<PlusOutlined />} onClick={() => toggle('support')}> How can I contact customer support? </Button>
         {paragraph['support'] && (
-          <p>Should you need assistance or have question that are not covered here, we are here to help. 
+          <p>Should you need assistance or have question that are not covered here, we are here to help.
             Feel free to reach out via email at AdaptSchedulesupport@.com, and we&#39;ll address your concerns and provide the assistance you need.</p>
         )}
 
         <Button icon={<PlusOutlined />} onClick={() => toggle('response')}> What is the response time from customer support? </Button>
         {paragraph['response'] && (
-          <p>Our goal is to provide timely assistance. 
-            While response times may vary based on the volume of inquiries, we strive to address your concerns as quickly as possible. 
+          <p>Our goal is to provide timely assistance.
+            While response times may vary based on the volume of inquiries, we strive to address your concerns as quickly as possible.
             Typically, you can expect a response from our customer support team within 24 to 48 hours.</p>
         )}
 
         <Button icon={<PlusOutlined />} onClick={() => toggle('forums')}> Are there user forums or communities for additional help? </Button>
         {paragraph['forums'] && (
-          <p>While Adapt Schedule is in its alpha state, we currently do not have user forums or large communities. 
-            However, our team is actively working on enhancing the platform, and we look forward to expanding support resources, including forums, as we progress. 
+          <p>While Adapt Schedule is in its alpha state, we currently do not have user forums or large communities.
+            However, our team is actively working on enhancing the platform, and we look forward to expanding support resources, including forums, as we progress.
             In the meantime, feel free to reach out to our customer support for any assistance you may need.</p>
         )}
 

@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
-import { Input, Button } from 'antd';
+import { Input, Button, DatePicker } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, HomeOutlined } from '@ant-design/icons';
 import appLogo from "../pic/logo-as1.png"
 import "../App.css";
 
+const stilSignUp={
+    width: "25%",
+    marginBottom:"20px"
+}
+
 function Signup() {
     const nav = useNavigate();
     const [signUp_podaci, noviKorisnik] = useState({
-        userName: "",
+        name: "",
+        lastName: "",
         password: "",
         email: "",
-        name: "",
-        lastName: ""
+        bday: ""
     });
 
     const [confirmPassword, provjeraLozinke] = useState("");
@@ -39,7 +44,7 @@ function Signup() {
         if (jeLiPopunjen(signUp_podaci) && confirmPassword != null) {
             if (confirmPassword == signUp_podaci.password) {
                 if (confirmPassword.length >= 8 && imaLiBroj(confirmPassword)) {
-                    //provjeri je li username uzet -> napravi novog korisnika
+                    //provjeri je li email uzet -> napravi novog korisnika
                     nav("/pocetna")
                 }
             }
@@ -48,7 +53,7 @@ function Signup() {
                 provjeraLozinke("");
             }
         }
-        else{
+        else {
             alert("Some fields were not filled");
             console.log(confirmPassword)
         }
@@ -65,28 +70,30 @@ function Signup() {
             <form onSubmit={provjeriPosalji} className="forme">
 
                 <Input type="text" name="name" value={signUp_podaci.name} onChange={promjenaPodataka}
-                    placeholder="Your name" style={{ width: '25%' }} />
+                    placeholder="Your name" style={stilSignUp} />
 
                 <Input type="text" name="lastName" value={signUp_podaci.lastName} onChange={promjenaPodataka}
-                    placeholder="Your last name" style={{ width: '25%' }} />
+                    placeholder="Your last name" style={stilSignUp} />
 
-                <Input type="text" name="userName" value={signUp_podaci.userName} onChange={promjenaPodataka}
-                    placeholder="Username" style={{ width: '25%' }} />
+                <DatePicker
+                    format="DD. MM. YYYY" placeholder="Select Birthdate" value={signUp_podaci.bday}
+                    onChange={promjenaPodataka} style={stilSignUp}
+                />
 
                 <Input type="email" name="email" value={signUp_podaci.email} onChange={promjenaPodataka}
-                    placeholder="Email" style={{ width: '25%' }} />
+                    placeholder="Email" style={stilSignUp} />
 
                 <Input.Password name="password" value={signUp_podaci.password} onChange={promjenaPodataka}
-                    placeholder="Password" style={{ width: '25%' }}
+                    placeholder="Password" style={stilSignUp}
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
 
                 <Input.Password name="confirmPassword" value={confirmPassword} onChange={promjenaPodataka}
-                    placeholder="Confirm password" style={{ width: '25%' }}
+                    placeholder="Confirm password" style={stilSignUp}
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
 
                 <label>Password has to be at least 8 characters and have one number</label><br />
 
-                <button type="submit" style={{ backgroundColor: "#356fbf" }}>Sign up</button>
+                <button type="submit" style={{ backgroundColor: "#E0E1DD" , color: "black"}}>Sign up</button>
             </form>
 
             <p>Already have an account?</p>
