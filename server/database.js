@@ -15,7 +15,7 @@ const pool = mysql.createPool(
 
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
-//               USER DATA MANIPULATION
+//               USER DATA MANIPULATION                    --> SOLVED COMPLETELY
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
@@ -102,17 +102,16 @@ export async function deleteUser(userID){
 
 // UPDATE user info ---> solved
 
-export async function updateUser(userID, name, surname, mail, password, birthday, theme){
+export async function updateUser(userID, name, surname, password, birthday, theme){
     const [user] = await pool.query(`
         UPDATE users
         SET name = ?,   
             surname = ?,
-            mail =?,
             password = ?,
             birthday = ?,
             theme = ?
         WHERE ID = ?
-   `, [name, surname, mail, password, birthday, theme, userID])
+   `, [name, surname, password, birthday, theme, userID])
    return user
 }
 

@@ -1,13 +1,13 @@
 
 import express from 'express'
 
-import {getUserById, getUserSchedules, getUsers, getUserByMail, getUserThatOwnsSchedule, createUser,deleteUser, updateUser} from './database.js' // still have work to do
+import {getUserById, getUsers, getUserSchedules, getUserByMail, getUserThatOwnsSchedule, createUser, updateUser, deleteUser} from './database.js' // --> solved
 
-import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule, updateSchedule, deleteSchedule} from './database.js' // still have work to do
+import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule, updateSchedule, deleteSchedule} from './database.js' // --> solved
 
-import {getEventById, getEvents, getEventReminders, createEvent, updateEvent, deleteEvent} from './database.js' // currently working on
+import {getEventById, getEvents, getEventReminders, createEvent, updateEvent, deleteEvent} from './database.js' // -->solved
 
-import {getReminderById, getReminders, createReminder, updateReminder, deleteReminder} from './database.js' //--> solved
+import {getReminderById, getReminders, createReminder, updateReminder, deleteReminder} from './database.js' // --> solved
 
 const serverResponse_OK = 200
 const serverResponse_Created = 201
@@ -22,7 +22,11 @@ const app = express()
 
 app.use(express.json())
 
-// USER API --> SOLVED COMPLETELY exception = deleteUser() needs upgrade once every other segment is finished
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+//                       USER API                          --> SOLVED COMPLETELY
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 app.get('/users', async (req, res) => { // gets all users --> solved
     
@@ -79,7 +83,7 @@ app.post('/users', async (req, res)=>{  // creates new user --> solved
     }
 })
 
-// NAPOMENA -----> Nije moguće mijenjati mail korsnika jer se onda logika previse zakomplicira
+// NAPOMENA -----> Nije moguće mijenjati mail korsnika jer se onda logika previse nepotrebno zakomplicira
 app.put('/users/updateUser/:id', async (req, res) => { // updates specific user --> solved 
     
     const user = await getUserById(req.params.id)
@@ -87,25 +91,47 @@ app.put('/users/updateUser/:id', async (req, res) => { // updates specific user 
     if(user === undefined){
         res.status(serverResponse_NotFound).send("User not found")
     }
-    else if(user.mail === req.body.mail){
-        res.status(serverResponse_OK).send(await updateUser(req.params.id, req.body.name, req.body.surname, req.body.mail, req.body.password, req.body.birthday, req.body.theme))
-    }
     else{
-        res.status(serverResponse_Conflict).send("Mail has to be the same as before!!!")
+        res.status(serverResponse_OK).send(await updateUser(req.params.id, req.body.name, req.body.surname, req.body.password, req.body.birthday, req.body.theme))
     }
 })
 
-app.delete('/users/deleteUser/:id', async (req, res) => { // deletes specific user --> yet to implement deletion of user schedules
+app.delete('/users/deleteUser/:id', async (req, res) => { // deletes specific user --> solved
 
     if(await getUserById(req.params.id) === undefined){
         res.status(serverResponse_NotFound).send("User not found")
     }
     else {
+        //delete all user schedules
+        const schedules = await getUserSchedules(req.params.id)
+
+            for(let i = 0; i < schedules.length; i++) {
+                //delete all events of the schedule
+                const events = await getScheduleEvents(schedules[i].schedule)
+
+                for(let j = 0; j < events.length; j++){  
+                    //delete all reminders of the event
+                    const reminders = await getEventReminders(events[j].event)
+
+                    for(let k = 0; k < reminders.length; k++){
+                        await deleteReminder(reminders[k].reminder)
+                    }
+
+                    await deleteEvent(events[j].event)
+                }
+
+                await deleteSchedule(schedules[i].schedule)
+            }
+            
         res.status(serverResponse_OK).send(await deleteUser(req.params.id))
     }
 })
 
-//SCHEDULE --> SOLVED COMPLETELY
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+//                    SCHEDULE API                         --> SOLVED COMPLETELY
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 app.get('/schedules', async (req, res) => { // gets all schedules --> solved
     res.status(serverResponse_OK).send(await getSchedules())
@@ -247,7 +273,11 @@ app.delete('/schedules/deleteSchedule/:id', async (req, res) =>{ // --> solved
     }
 })
 
-//EVENT --> SOLVED COMPLETELY
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+//                       EVENT API                         --> SOLVED COMPLETELY
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 app.get('/events', async (req, res) => { // --> solved
     res.status(serverResponse_OK).send(await getEvents())
@@ -320,7 +350,11 @@ app.delete('/events/deleteEvent/:id', async (req, res) =>{ // --> solved
     
 })
 
-//REMINDER  --> SOLVED COMPLETELY
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+//                    REMINDER API                         --> SOLVED COMPLETELY
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 app.get('/reminders', async (req, res) => { // --> solved
     res.status(serverResponse_OK).send(await getReminders())
