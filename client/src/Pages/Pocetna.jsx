@@ -3,21 +3,22 @@ import { List, Card, Button } from 'antd';
 import NavLeft from "../components/navLeft";
 import NavUpper from "../components/navUpper";
 
+const userID = 2 // TODO: get real user id
+
+const scheduleIDs = await fetch(`http://localhost:8080/users/${userID}/schedules`)
+.then(response => response.json())
+.catch(error => console.error('Error:', error), [])
+
+const scheduleList = [];
+
+for(let i = 0; i < scheduleIDs.length; i++) {
+  scheduleList.push(await fetch( `http://localhost:8080/schedules/searchById/${scheduleIDs[i].schedule}`)
+  .then(response => response.json())
+  .catch(error => console.error('Error:', error)))
+}
+
 const Pocetna = () => {
-  const [schedules, setSchedules] = useState([
-    {
-      id: 0,
-      name: "OMG"
-    },
-    {
-        id: 1,
-        name: "RADI!!"
-      },
-      {
-        id: 3,
-        name: "yippee"
-      },
-  ]);
+  const [schedules, setSchedules] = useState(scheduleList);
 
   const handleEdit = (scheduleId) => {
     //otvori u tom rasporedu i pročitaj sve podatke
