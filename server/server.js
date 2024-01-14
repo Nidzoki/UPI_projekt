@@ -79,7 +79,7 @@ app.post('/users', async (req, res)=>{  // creates new user --> solved
     }
     else{
         console.log("User already exists")
-        res.status(serverResponse_OK).send("User alreaday exists!")
+        res.status(serverResponse_Conflict).send("User alreaday exists!")
     }
 })
 
@@ -170,8 +170,8 @@ app.get('/schedules/:id/events', async (req, res) => { // gets all events of spe
     }
 })
 
-app.post('/schedules', async (req, res) => { // creates a new schedule --> solved
-    const {userID, scheduleName, start, end, type} = req.body
+app.post('/schedules', async (req, res) => { // creates a new schedule --> solved       maknuti start i end
+    const {userID, scheduleName, type} = req.body
 
     if(await getUserById(userID) === undefined) {
         res.status(serverResponse_NotFound).send("User not found") 

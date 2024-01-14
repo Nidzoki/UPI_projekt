@@ -45,7 +45,7 @@ export async function getUsersBySurname(userSurname){
     return result
 }
 
-export async function getUsersOlderThan(userBirthday){
+/* export async function getUsersOlderThan(userBirthday){
     const [result] = await pool.query("SELECT * FROM users WHERE birthday < ?", [userBirthday])
     return result
 }
@@ -58,7 +58,7 @@ export async function getUsersYoungerThan(userBirthday){
 export async function getUsersThatHaveBirthdayOn(userBirthday){
     const [result] = await pool.query("SELECT * FROM users WHERE birthday = ?", [userBirthday])
     return result
-}
+} */
 
 export async function getUserSchedules(userID){
     const [result] = await pool.query("SELECT schedule FROM user_schedule WHERE user = ?", [userID])
@@ -146,12 +146,12 @@ export async function getScheduleEvents(scheduleID){
 
 // CREATE new schedule --> solved
 
-export async function createSchedule(userID, scheduleName, start, end, type){
+export async function createSchedule(userID, scheduleName, type){
     
     const [schedule] = await pool.query(`
-        INSERT INTO schedules (name, start, end, type) 
-        VALUES (?,?,?,?)
-    `, [scheduleName, start, end, type])
+        INSERT INTO schedules (name, type) 
+        VALUES (?,?)
+    `, [scheduleName, type])
     
     const [result] = await pool.query(`
         INSERT INTO user_schedule (schedule, user) 
@@ -185,16 +185,14 @@ export async function deleteSchedule(scheduleID){
 
 // UPDATE schedule info -> solved
 
-export async function updateSchedule(name, start, end, type, scheduleID){
+export async function updateSchedule(name, type, scheduleID){
     const [schedule] = await pool.query(`
         UPDATE schedules
-        SET name = ?,   
-            start = ?,
-            end =?,
+        SET name = ?,
             type = ?
         WHERE ID = ?
    
-    `, [name, start, end, type, scheduleID])
+    `, [name, type, scheduleID])
     return schedule
     }
 
