@@ -1,37 +1,56 @@
-import { getUserByMail } from "../server/database"
-import express from express
-const express = require("express")
+import express from 'express';
+//const express = import("express")
 const app=express()
 app.use(express.json())
-var obavijest
+
 function provjeriMail(mail){
-    boolMail=true
-    if(getUserByMail(mail)=null)
+    let trazeniMail="";
+    (req,rep)=>(rep=app.fetch(`/users/searchByMail/${mail}`)
+    .then(rep=rep.json())
+    .then(trazeniMail=rep.mail)
+    .catch(err=>console.log(err)))
+    console.log(trazeniMail+"trazeni mail")
+    
+
+    var boolMail=true
+
+    if(trazeniMail=null)
     {
-        obavijest="Netocan mail. Jeste li se registrirali?"
         boolMail=false
     }
-    return boolMail
+
+    return {boolMail }
 }
 function provjeriLozinku(mail,lozinka){
-    const user = getUserByMail(mail)
-    boolLozinka=false
-    if(user.password=lozinka){
+
+    let vracenaLozinka="";
+    (req,rep)=>(app.fetch(`/users/searchByMail/${mail}`)
+    .then(rep=rep.json())
+    .then(vracenaLozinka=rep.password)
+    .catch(err=>console.log(err)))
+
+    var boolLozinka=false
+    let idKorisnik=null;
+
+    if(vracenaLozinka==lozinka){
         boolLozinka=true
         idKorisnik=user.id
     }
     return {boolLozinka, idKorisnik}
 }
-function prijavaKorisnika(mail, lozinka)
-{
-    //ideja je da klikom na prijavu ako je uspjesna, korisnik ide na homepage pa je ovaj bool kao i ostali za provjeru moze li se dalje
-    boolHomepage=false
-    if(provjeriMail){
-        
+export default function prijavaKorisnika()
+{   //let mail='ante@nekimail.com'
+    //let lozinka='loz123'
+    var boolHomepage=false
+    let id=null;
+    if(provjeriMail(mail)){
         if (provjeriLozinku(mail,lozinka).boolLozinka) {
             id=idKorisnik
             boolHomepage=true
         }
     }
-    return boolHomepage
+    
+    console.log(boolHomepage.toString())
+    return {boolHomepage, id}
 }
+prijavaKorisnika()

@@ -1,13 +1,13 @@
 
-import express from 'express'
+import cors from 'cors';
+import express from 'express';
+import { createUser, deleteUser, getUserById, getUserByMail, getUserSchedules, getUserThatOwnsSchedule, getUsers, updateUser } from './database.js'; // --> solved
 
-import {getUserById, getUsers, getUserSchedules, getUserByMail, getUserThatOwnsSchedule, createUser, updateUser, deleteUser} from './database.js' // --> solved
+import { createSchedule, deleteSchedule, getScheduleById, getScheduleByName, getScheduleEvents, getSchedules, updateSchedule } from './database.js'; // --> solved
 
-import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule, updateSchedule, deleteSchedule} from './database.js' // --> solved
+import { createEvent, deleteEvent, getEventById, getEventReminders, getEvents, updateEvent } from './database.js'; // -->solved
 
-import {getEventById, getEvents, getEventReminders, createEvent, updateEvent, deleteEvent} from './database.js' // -->solved
-
-import {getReminderById, getReminders, createReminder, updateReminder, deleteReminder} from './database.js' // --> solved
+import { createReminder, deleteReminder, getReminderById, getReminders, updateReminder } from './database.js'; // --> solved
 
 const serverResponse_OK = 200
 const serverResponse_Created = 201
@@ -21,7 +21,7 @@ const port_number = 8080
 const app = express()
 
 app.use(express.json())
-
+app.use(cors())
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 //                       USER API                          --> SOLVED COMPLETELY
