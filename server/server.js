@@ -1,6 +1,6 @@
 
 import express from 'express'
-
+import cors from 'cors'
 import {getUserById, getUsers, getUserSchedules, getUserByMail, getUserThatOwnsSchedule, createUser, updateUser, deleteUser} from './database.js' // --> solved
 
 import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule, updateSchedule, deleteSchedule} from './database.js' // --> solved
@@ -21,7 +21,7 @@ const port_number = 8080
 const app = express()
 
 app.use(express.json())
-
+app.use(cors())
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 //                       USER API                          --> SOLVED COMPLETELY
