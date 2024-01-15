@@ -19,7 +19,7 @@ function App() {
   const [backendData, setBackendData] = useState([{}])
 
   useEffect(() => {
-    fetch("http://localhost:8081/users")
+    fetch("http://localhost:8080/users")
       .then((response) => response.json())
       .then(data => {
         console.log(data);

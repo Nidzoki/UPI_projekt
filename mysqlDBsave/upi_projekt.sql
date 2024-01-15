@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2024 at 06:18 PM
+-- Generation Time: Jan 14, 2024 at 06:23 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,13 +34,6 @@ CREATE TABLE `events` (
   `end` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`ID`, `name`, `start`, `end`) VALUES
-(1, 'Marinov rodendan', '2023-12-12 00:00:00', '2024-01-09 17:34:13');
-
 -- --------------------------------------------------------
 
 --
@@ -51,13 +44,6 @@ CREATE TABLE `event_reminder` (
   `reminder` bigint(20) NOT NULL,
   `event` bigint(20) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `event_reminder`
---
-
-INSERT INTO `event_reminder` (`reminder`, `event`) VALUES
-(1, 1);
 
 -- --------------------------------------------------------
 
@@ -70,13 +56,6 @@ CREATE TABLE `reminders` (
   `time` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `reminders`
---
-
-INSERT INTO `reminders` (`ID`, `time`) VALUES
-(1, '2023-12-12 00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -86,8 +65,6 @@ INSERT INTO `reminders` (`ID`, `time`) VALUES
 CREATE TABLE `schedules` (
   `ID` bigint(20) UNSIGNED NOT NULL,
   `name` tinytext NOT NULL,
-  `start` datetime NOT NULL,
-  `end` datetime NOT NULL,
   `type` tinytext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -95,8 +72,8 @@ CREATE TABLE `schedules` (
 -- Dumping data for table `schedules`
 --
 
-INSERT INTO `schedules` (`ID`, `name`, `start`, `end`, `type`) VALUES
-(1, 'Moj raspored', '2023-12-01 00:00:00', '2024-01-01 00:00:00', 'Mjesecni');
+--INSERT INTO `schedules` (`ID`, `name`, `type`) VALUES
+--(57, 'conflictschedule', 'asg');
 
 -- --------------------------------------------------------
 
@@ -108,13 +85,6 @@ CREATE TABLE `schedule_event` (
   `event` bigint(20) NOT NULL,
   `schedule` bigint(20) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `schedule_event`
---
-
-INSERT INTO `schedule_event` (`event`, `schedule`) VALUES
-(1, 1);
 
 -- --------------------------------------------------------
 
@@ -136,10 +106,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`ID`, `name`, `surname`, `mail`, `password`, `birthday`, `theme`) VALUES
-(1, 'Marko', 'Maric', 'markomaric@nekimail.com', 'lozinka123', '2000-01-01', 'a'),
-(2, 'Nikola', 'Nikoli?', 'nikola@nekimail.com', 'loza123', '1999-12-31', 'a'),
-(4, 'Ante', 'Antic', 'ante@nekimail.com', 'loz123', '1989-11-30', 'a');
+--INSERT INTO `users` (`ID`, `name`, `surname`, `mail`, `password`, `birthday`, `theme`) VALUES
+--(12, 'ante', 'antic', 'doubleante@nesto.com', 'stajaznamvise', '2024-01-23', 'a'),
+--(11, 'ante', 'antic', 'ante@nesto.com', 'stajaznamvise', '2024-01-23', 'a');
 
 -- --------------------------------------------------------
 
@@ -156,8 +125,8 @@ CREATE TABLE `user_schedule` (
 -- Dumping data for table `user_schedule`
 --
 
-INSERT INTO `user_schedule` (`schedule`, `user`) VALUES
-(1, 1);
+--INSERT INTO `user_schedule` (`schedule`, `user`) VALUES
+--(57, 2);
 
 --
 -- Indexes for dumped tables
@@ -218,25 +187,25 @@ ALTER TABLE `user_schedule`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `reminders`
 --
 ALTER TABLE `reminders`
-  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
