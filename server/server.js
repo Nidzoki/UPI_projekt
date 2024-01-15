@@ -3,10 +3,11 @@ import express from 'express'
 import cors from 'cors'
 import {getUserById, getUsers, getUserSchedules, getUserByMail, getUserThatOwnsSchedule, createUser, updateUser, deleteUser} from './database.js' // --> solved
 
+import {getScheduleById, getScheduleByName, getSchedules, getScheduleEvents, createSchedule, updateSchedule, deleteSchedule} from './database.js' // --> solved
 
-import { createEvent, deleteEvent, getEventById, getEventReminders, getEvents, updateEvent } from './database.js'; // -->solved
+import {getEventById, getEvents, getEventReminders, createEvent, updateEvent, deleteEvent} from './database.js' // -->solved
 
-import { createReminder, deleteReminder, getReminderById, getReminders, updateReminder } from './database.js'; // --> solved
+import {getReminderById, getReminders, createReminder, updateReminder, deleteReminder} from './database.js' // --> solved
 
 const serverResponse_OK = 200
 const serverResponse_Created = 201
