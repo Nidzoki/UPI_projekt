@@ -1,56 +1,53 @@
 import express from 'express';
-//const express = import("express")
+
 const app=express()
 app.use(express.json())
 
-function provjeriMail(mail){
-    let trazeniMail="";
-    (req,rep)=>(rep=app.fetch(`/users/searchByMail/${mail}`)
-    .then(rep=rep.json())
-    .then(trazeniMail=rep.mail)
-    .catch(err=>console.log(err)))
-    console.log(trazeniMail+"trazeni mail")
+async function provjeriMail(mail){
     
-
-    var boolMail=true
-
-    if(trazeniMail=null)
-    {
-        boolMail=false
-    }
-
-    return {boolMail }
+    const user = await fetch(`http://localhost:8080/users/searchByMail/${mail}`)
+    .then(response => response.json())
+    .catch(error => console.error('Error:', error))
+    return (user !== undefined)
 }
-function provjeriLozinku(mail,lozinka){
+async function provjeriLozinku(mail,lozinka){
 
-    let vracenaLozinka="";
-    (req,rep)=>(app.fetch(`/users/searchByMail/${mail}`)
-    .then(rep=rep.json())
-    .then(vracenaLozinka=rep.password)
-    .catch(err=>console.log(err)))
-
-    var boolLozinka=false
-    let idKorisnik=null;
-
-    if(vracenaLozinka==lozinka){
-        boolLozinka=true
-        idKorisnik=user.id
-    }
-    return {boolLozinka, idKorisnik}
+    const user = await fetch(`http://localhost:8080/users/searchByMail/${mail}`)
+    .then(response => response.json())
+    .catch(error => console.error('Error:', error))
+    
+    if(user !== undefined)
+        return (user.password === lozinka)
+    return false
 }
-export default function prijavaKorisnika()
-{   //let mail='ante@nekimail.com'
-    //let lozinka='loz123'
-    var boolHomepage=false
-    let id=null;
-    if(provjeriMail(mail)){
-        if (provjeriLozinku(mail,lozinka).boolLozinka) {
-            id=idKorisnik
+export default async function prijavaKorisnika(mail, lozinka)
+{   
+    
+    var boolHomepage = false
+    let user = null;
+    let id = null
+    if(provjeriMail(mail) && provjeriLozinku(mail, lozinka)){
+
+        console.log("Oba uvjeta su zadovoljena")
+        user = await fetch(`http://localhost:8080/users/searchByMail/${mail}`)
+        .then(response => response.json())
+        .catch(error => console.error('Error', error))
+        if(user !== undefined){
             boolHomepage=true
+            id = user.ID
         }
     }
+    else{
+        return {boolHomepage, undefined}
+    }
     
-    console.log(boolHomepage.toString())
     return {boolHomepage, id}
 }
-prijavaKorisnika()
+
+// testiranje
+
+/* console.log(await prijavaKorisnika('ante@nesto.co','loz123'))
+
+console.log(await prijavaKorisnika("ante@nesto.com","stajaznamvise"))
+ */
+
