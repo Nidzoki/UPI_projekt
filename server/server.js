@@ -194,7 +194,7 @@ app.post('/schedules', async (req, res) => { // creates a new schedule --> solve
             res.status(serverResponse_Conflict).send("Schedule with this name already exists")
         }
         else{ // ako se ne podudara = pravi novi
-            res.status(serverResponse_OK).send(await createSchedule(userID, scheduleName, start, end, type)) 
+            res.status(serverResponse_OK).send(await createSchedule(userID, scheduleName, type)) 
         }
         
     }
@@ -212,7 +212,7 @@ app.put('/schedules/updateSchedule/:id', async (req, res) =>{ // --> solved
     else
     {
         if(req.body.name === schedule.name){
-            res.status(serverResponse_OK).send(await updateSchedule(req.body.name, req.body.start, req.body.end, req.body.type, req.params.id))
+            res.status(serverResponse_OK).send(await updateSchedule(req.body.name, req.body.type, req.params.id))
         }
         else
         {
@@ -237,7 +237,7 @@ app.put('/schedules/updateSchedule/:id', async (req, res) =>{ // --> solved
             }
             else
             {
-                res.status(serverResponse_OK).send(await updateSchedule(req.body.name, req.body.start, req.body.end, req.body.type, req.params.id))
+                res.status(serverResponse_OK).send(await updateSchedule(req.body.name, req.body.type, req.params.id))
             }
         }
     }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { List, Card, Button } from 'antd';
 import NavLeft from "../components/navLeft";
 import NavUpper from "../components/navUpper";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // let userID = 11 // TODO: get real user id
 
@@ -20,37 +20,23 @@ import { useNavigate } from 'react-router-dom';
 
 const Pocetna = (korisnikID) => {
 
-  const nav = useNavigate();
-  const [schedules, setSchedules] = useState([]);
+  const scheduleList = [];
+  const location = useLocation();
+  const [schedules, setSchedules] = useState(scheduleList);
 
-  useEffect(() => {
-    const fetchScheduleDetails = async (scheduleIDs) => {
-      try {
-        const updatedSchedules = [];
-
-        for (let i = 0; i < scheduleIDs.length; i++) {
-          const response = await fetch(`http://localhost:8080/schedules/searchById/${scheduleIDs[i].schedule}`);
-          const data = await response.json();
-          updatedSchedules.push(data);
-        }
-
-        setSchedules(updatedSchedules);
-      } catch (error) {
-        console.error('Error fetching schedule details:', error);
-      }
-    };
-
-    fetch(`http://localhost:8080/users/${11}/schedules`)
-      .then(res => res.json())
-      .then(data => {
-        // console.log("User Schedules:", data);
-        fetchScheduleDetails(data);
-      })
-      .catch(error => console.error('Error fetching user schedules:', error));
-
-  }, [schedules]);
+  const userID = location.state.userId
+  console.log(userID);
+  const scheduleIDs = async ()=>await fetch(`http://localhost:8080/users/${userID}/schedules`)
+  .then(response => response.json())
+  .catch(error => console.error('Error:', error))
 
 
+
+for(let i = 0; i < scheduleIDs.length; i++) {
+  scheduleList.push(async ()=>await fetch( `http://localhost:8080/schedules/searchById/${scheduleIDs[i].schedule}`)
+  .then(response => response.json())
+  .catch(error => console.error('Error:', error)))
+} 
 
 
   const handleEdit = (scheduleId, scheduleType, scheduleName) => {
