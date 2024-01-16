@@ -7,7 +7,7 @@ import '../App.css';
 
 
 const NavLeft = () => {
-    const [nazivRasporeda, postaviNaziv] = useState();
+    const [nazivRasporeda, postaviNaziv] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [typeofSchedule, setType] = useState("Month");
     const nav = useNavigate();
@@ -20,11 +20,42 @@ const NavLeft = () => {
 
     const showModal = () => { setIsModalVisible(true) };
 
-    function makeSchedule() {
-        if (typeofSchedule == "Month") nav("/monthSchedule", { state: nazivRasporeda })
-        else nav("/weekSchedule", { state: nazivRasporeda })
-    }
 
+    async function makeSchedule() {
+        //const {userID, scheduleName, type} = req.body
+        if (nazivRasporeda != "") {
+
+            const podaci = {
+                "userID": 11,
+                "scheduleName": nazivRasporeda,
+                "type": typeofSchedule
+            }
+            let raspored = undefined
+
+            const schedule = await fetch("http://localhost:8080/schedules",
+                {
+                    method: 'POST',
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(podaci)
+                })
+                .then(response => response.json())
+                .then(data => { raspored = data })
+                .catch(error => console.error('Error:', error))
+
+            if (raspored !== undefined) {
+                // console.log("Naziv rasporeda i id: ", raspored.ID)
+
+                if (typeofSchedule == "Month") {
+                    nav("/monthSchedule", { state: { id: raspored.ID, naziv: nazivRasporeda, tip: typeofSchedule } }) //id za update rasporeda, naziv za naziv rasporeda
+                }
+                else nav("/weekSchedule", { state: { id: raspored.ID, naziv: nazivRasporeda, tip: typeofSchedule } }) 
+            }
+        }
+        else { alert("Name of schedule can't be emplty") }
+    }
     function handleCancel() { setIsModalVisible(false) }
 
     function changeType(event) { setType(event.target.value) }

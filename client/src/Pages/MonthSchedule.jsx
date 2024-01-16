@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Calendar, Card, Modal, Input, Radio, Badge } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import NavUpper from '../components/NavUpperSch';
 import '../App.css';
+import { useLocation } from 'react-router-dom';
 
 const kalendarStil = {
     height: 'auto',
@@ -23,6 +24,12 @@ const margina = {
 }
 
 function Mjesecni() {
+    //pogledaj imal i koji event, nema -> divno!! -> useEffect
+
+    const location = useLocation();
+    const podaci = location.state
+
+
     const [selectedDate, setSelectedDate] = useState(null);
     const [events, setEvents] = useState([]);
 
@@ -31,22 +38,69 @@ function Mjesecni() {
     const [addEvent, setAddEvent] = useState(false);
     const [eventName, setEventName] = useState({
         id: 0,
-        title: "",
-        description: "",
-        date: "",
+        name: "",
+        start: "",
         type: "none",
     });
+
+
+    useEffect(() => {
+        const fetchEventDetails = async (eventsId) => {
+            try {
+                const updateEvents = [];
+    
+                for (let i = 0; i < eventsId.length; i++) {
+                    const response = await fetch(`http://localhost:8080/events/searchById/${eventsId[i].event}`);
+                    const data = await response.json();
+                    updateEvents.push(data);
+                }
+    
+                setEvents(updateEvents);
+            } catch (error) {
+                console.error('Error fetching schedule details:', error);
+            }
+        };
+    
+        fetch(`http://localhost:8080/schedules/${podaci.id}/events`)
+            .then(res => res.json())
+            .then(data => {
+                fetchEventDetails(data);
+            })
+            .catch(error => console.error('Error fetching user events:', error));
+    }, [podaci.id]);
+    
+
+
 
     const [editEvent, setEditEvent] = useState();
     const [checkIfEdit, setChecker] = useState(false);
 
-    function editElement(index) {
-        const eventToEdit = events.find((day) => day.id === index);
-        console.log(eventToEdit);
-        handleDeleteEvent(index);
+    async function editElement(index) {
+        const eventToEdit = events.find((day) => day.ID === index);
         setEditEvent(eventToEdit);
         setChecker(true)
         setAddEvent(true);
+        console.log(editEvent)
+
+        try {
+            const response = await fetch(`http://localhost:8080/events/updateEvent/${index}`, {
+                method: 'PUT',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ eventToEdit })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                const updatedEvents = events.filter(event => event.ID !== index);
+                setEvents(updatedEvents);
+            }
+            else { console.error('Error updating event:', data) }
+        }
+        catch (error) { console.error('Error:', error) }
     }
 
     const handleAddEvent = () => {
@@ -58,11 +112,10 @@ function Mjesecni() {
             }
             else {
                 setEventName({
-                    id: events.length,
-                    title: "",
-                    description: "",
-                    date: selectedDate,
-                    type: "none"
+                    ID: 0,
+                    name: "",
+                    start: selectedDate,
+                    type: "none",
                 })
             }
             setAddEvent(true);
@@ -81,33 +134,74 @@ function Mjesecni() {
     };
 
 
-    function handleDeleteEvent(index) {
-        const broj = events.findIndex(day => day.id === index);
+    async function handleDeleteEvent(index) {
+        const broj = events.findIndex(day => day.ID === index);
         if (broj !== -1) {
-            const updatedEvents = [...events];
-            updatedEvents.splice(broj, 1);
-            setEvents(updatedEvents);
+            try {
+                const response = await fetch(`http://localhost:8080/events/deleteEvent/` + index, {
+                    method: 'DELETE',
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    console.log("IZBRISANO!!!")
+                }
+                else { console.error('Error deleting schedule:', data) }
+            }
+            catch (error) { console.error('Error:', error) }
         }
+
+        const updatedEvents = [...events];
+        updatedEvents.splice(broj, 1);
+        setEvents(updatedEvents);
     }
 
 
-    const handleOk = () => {
+
+    async function handleOk() {
         if (eventName.title !== "") {
-            console.log(eventName);
             setAddEvent(false);
-            setEventName({ ...eventName, date: selectedDate });
-            setEvents([...events, eventName])
-
+    
+            const jedanEvent = { scheduleID: podaci.id, name: eventName.title, start: selectedDate, end: selectedDate };
+            try {
+                const response = await fetch(`http://localhost:8080/events`, {
+                    method: 'POST',
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(jedanEvent)
+                });
+    
+                const data = await response.json();
+                console.log("Data: ", data);
+    
+                if (response.ok) {
+                    setEvents([...events, data]);
+                    setEventName({ ...eventName, date: selectedDate, ID: data.ID, title: data.name });
+                    console.log("Event name: ", eventName);
+                } else {
+                    console.error('Error creating event:', data);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        } else {
+            alert("You need to put a title to create a new event");
         }
-        else { alert("You need to put title so you can make new event") }
     }
+    
 
     function handleCancelAdd() {
         setEventName({
             id: 0,
-            title: "",
-            description: "",
-            date: "",
+            name: "",
+            start: "",
             type: "none",
         })
         setAddEvent(false)
@@ -116,14 +210,13 @@ function Mjesecni() {
 
     const CellRender = (value) => {
         const formattedDate = value.format('DD. MM. YYYY.');
-        const matchingDays = events.filter((day) => day.date === formattedDate);
-
+        const matchingDays = events.filter((day) => day.start === formattedDate);
         if (matchingDays.length > 0) {
             return (
-                <ul className="events">
+                <ul>
                     {matchingDays.map((item) => (
-                        <li key={item.id}>
-                            <Badge status={item.type} text={item.title} />
+                        <li key={item.ID}>
+                            <Badge status={"default"} text={item.name} />
                         </li>
                     ))}
                 </ul>
@@ -134,29 +227,15 @@ function Mjesecni() {
     }
 
 
-
     function promjenaPodataka(event) {
         const { name, value } = event.target;
         setEventName({ ...eventName, [name]: value });
     }
 
-    function boja(tip) {
-        switch (tip) {
-            case "default":
-                return "blue"
-            case "success":
-                return "green";
-            case "warning":
-                return "orange";
-            case "error":
-                return "red";
-        }
-
-    }
 
     return (
         <div className="tablica">
-            <NavUpper />
+            <NavUpper data={podaci} />
             <Calendar id="kalendar" onSelect={handleDateSelect} cellRender={CellRender} style={kalendarStil} />
 
             {selectedDate && (
@@ -176,6 +255,7 @@ function Mjesecni() {
                             <Input type="text" name="description" placeholder="Description" value={eventName.description} onChange={promjenaPodataka}
                                 style={{ width: '95%', height: "30%", margin: "5px", alignSelf: "center" }} />
                             <Radio.Group onChange={promjenaPodataka} name="type" style={{ margin: "5px" }}>
+                                <Radio value="none">None</Radio>
                                 <Radio value="default"><div style={{ ...radioStil, backgroundColor: 'blue' }} /></Radio>
                                 <Radio value="success"><div style={{ ...radioStil, backgroundColor: 'green' }} /></Radio>
                                 <Radio value="warning"><div style={{ ...radioStil, backgroundColor: 'orange' }} /></Radio>
@@ -189,29 +269,26 @@ function Mjesecni() {
                         </form>)}
 
                     {events.map((day) => {
-                        if (day.date === selectedDate) {
-
+                        if (day.start === selectedDate) {
                             return (
-                                <Card key={day.id} title={day.title}>
-                                    {day.type !== "none" && (
-                                        <div style={{ ...radioStil, backgroundColor: boja(day.type) }}></div>
-                                    )}
-                                    <p>{day.description}</p>
-                                    <Button type="primary" onClick={() => editElement(day.id)} style={margina}>Edit event</Button>
-                                    <Button icon={<DeleteOutlined />} onClick={() => handleDeleteEvent(day.id)} style={margina}>
+                                <Card key={day.ID} title={day.name}>
+                                    <Button type="primary" onClick={() => editElement(day.ID)} style={margina}>Edit event</Button>
+                                    <Button icon={<DeleteOutlined />} onClick={() => handleDeleteEvent(day.ID)} style={margina}>
                                         Delete
                                     </Button>
                                 </Card>
                             );
                         }
                         return null;
-                    })}
+                    }
+                    )
+                    }
                 </Modal>
             )}
 
 
         </div>
     );
-}
 
+}
 export default Mjesecni;

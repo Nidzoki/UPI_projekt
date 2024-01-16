@@ -19,7 +19,7 @@ const styles = {
 function WeekSchedule() {
 
     const location = useLocation();
-    const nazivRasporeda = location.state;
+    const podaci = location.state
 
     const calendarRef = useRef()
 
@@ -133,7 +133,7 @@ function WeekSchedule() {
 
     return (
         <>
-            <NavUpper id="navSchGornja" naziv={nazivRasporeda} raspored={nazivRasporeda} />
+            <NavUpper id="navSchGornja" data={podaci}  />
             <div id="gl" style={styles.wrap}>
 
                 <div id="mon" style={styles.left}>
