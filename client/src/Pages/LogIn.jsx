@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Input, Button } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, HomeOutlined } from '@ant-design/icons';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import "../App.css";
 import appLogo from "../pic/logo-as1.png";
+import prijavaKorisnika from "../../../reg_prij_pokusaj/prijava";
 
 const stilSignUp={
     width: "25%",
     marginBottom:"20px"
 }
 
-
+function jeLiPopunjen(obj) {
+    return Object.values(obj).every(element => element !== null); //vraća false ako je objekt prazan, provjeravamo je li korisnik unio podatke
+}
 function Login() {
 
     const nav = useNavigate();
@@ -26,12 +29,22 @@ function Login() {
 
     }
 
-    const provjeriPosalji = (event) => {
+    const provjeriPosalji = async (event) => {
         event.preventDefault()
         console.log(logIn_podaci)
-        //provjeri postoji li taj korisnik
-        //ako je -> token !!!
-        nav("/pocetna")
+        if (jeLiPopunjen(logIn_podaci)){
+            console.log(await prijavaKorisnika(logIn_podaci.email, logIn_podaci.password))
+                    if((await prijavaKorisnika(logIn_podaci.email, logIn_podaci.password)).boolHomepage)
+                        nav("/pocetna")
+                    else{
+                        console.error("Email ili lozinka netočna!")
+                    }
+                }
+            
+        else {
+            alert("Some fields were not filled");
+            console.log(confirmPassword)
+        }
 
     }
 
