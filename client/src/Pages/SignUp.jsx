@@ -4,6 +4,7 @@ import { Input, Button, DatePicker } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, HomeOutlined } from '@ant-design/icons';
 import appLogo from "../pic/logo-as1.png"
 import "../App.css";
+import {registracijaKorisnika} from "../../../reg_prij_pokusaj/prijava"
 
 const stilSignUp={
     width: "25%",
@@ -20,16 +21,11 @@ function Signup() {
         bday: ""
     });
 
-    const [confirmPassword, provjeraLozinke] = useState("");
-
     function promjenaPodataka(event) {
         const { name, value } = event.target;
         noviKorisnik({ ...signUp_podaci, [name]: value });
-        if (name == "confirmPassword") {
-            provjeraLozinke(value)
-        }
-
     }
+
     function imaLiBroj(tekst) { //provjerava li ima li tekst (lozinka brojeva)
         return /\d/.test(tekst);
     }
@@ -39,18 +35,19 @@ function Signup() {
     }
 
 
-    const provjeriPosalji = (event) => {
+    const provjeriPosalji = async (event) => {
         event.preventDefault()
-        if (jeLiPopunjen(signUp_podaci) && confirmPassword != null) {
-            if (confirmPassword == signUp_podaci.password) {
-                if (confirmPassword.length >= 8 && imaLiBroj(confirmPassword)) {
-                    //provjeri je li email uzet -> napravi novog korisnika
-                    nav("/pocetna")
+        console.log(signUp_podaci)
+        if (jeLiPopunjen(signUp_podaci)) {
+            if (signUp_podaci.password.length >= 8 && imaLiBroj(signUp_podaci.password)) {
+                    if(registracijaKorisnika(signUp_podaci.name,signUp_podaci.lastName,signUp_podaci.email, signUp_podaci.password, signUp_podaci.password, "2024-01-22T23:00:00.000Z"))
+                        nav("/pocetna")
+                    else{
+                        console.error("Greska pri registraciji!")
+                    }
                 }
-            }
             else {
-                alert("Passwords do not match!")
-                provjeraLozinke("");
+                alert("Lozinka ne zadovoljava uvjete")
             }
         }
         else {
@@ -75,20 +72,11 @@ function Signup() {
                 <Input type="text" name="lastName" value={signUp_podaci.lastName} onChange={promjenaPodataka}
                     placeholder="Your last name" style={stilSignUp} />
 
-                <DatePicker
-                    format="DD. MM. YYYY" placeholder="Select Birthdate" value={signUp_podaci.bday}
-                    onChange={promjenaPodataka} style={stilSignUp}
-                />
-
                 <Input type="email" name="email" value={signUp_podaci.email} onChange={promjenaPodataka}
                     placeholder="Email" style={stilSignUp} />
 
                 <Input.Password name="password" value={signUp_podaci.password} onChange={promjenaPodataka}
                     placeholder="Password" style={stilSignUp}
-                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-
-                <Input.Password name="confirmPassword" value={confirmPassword} onChange={promjenaPodataka}
-                    placeholder="Confirm password" style={stilSignUp}
                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
 
                 <label>Password has to be at least 8 characters and have one number</label><br />
