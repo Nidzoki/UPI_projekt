@@ -18,6 +18,7 @@ function Login() {
 
     const nav = useNavigate();
 
+
     const [logIn_podaci, noviKorisnik] = useState({
         email: "",
         password: "",
@@ -33,9 +34,9 @@ function Login() {
         event.preventDefault()
         console.log(logIn_podaci)
         if (jeLiPopunjen(logIn_podaci)){
-            console.log(await prijavaKorisnika(logIn_podaci.email, logIn_podaci.password))
-                    if((await prijavaKorisnika(logIn_podaci.email, logIn_podaci.password)).boolHomepage)
-                        nav("/pocetna")
+            const prijava = await prijavaKorisnika(logIn_podaci.email, logIn_podaci.password)
+                    if(prijava.boolHomepage)
+                        nav("/pocetna", { state: { userId: prijava.id}})
                     else{
                         console.error("Email ili lozinka netočna!")
                     }

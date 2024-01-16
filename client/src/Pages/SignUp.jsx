@@ -40,8 +40,9 @@ function Signup() {
         console.log(signUp_podaci)
         if (jeLiPopunjen(signUp_podaci)) {
             if (signUp_podaci.password.length >= 8 && imaLiBroj(signUp_podaci.password)) {
-                    if(registracijaKorisnika(signUp_podaci.name,signUp_podaci.lastName,signUp_podaci.email, signUp_podaci.password, signUp_podaci.password, "2024-01-22T23:00:00.000Z"))
-                        nav("/pocetna")
+                    const registracija = await registracijaKorisnika(signUp_podaci.name,signUp_podaci.lastName,signUp_podaci.email, signUp_podaci.password, signUp_podaci.password, "2024-01-22T23:00:00.000Z")
+                    if(registracija.boolPrijava)
+                    nav("/pocetna", { state: { userId: registracija.userDetails.ID}})
                     else{
                         console.error("Greska pri registraciji!")
                     }

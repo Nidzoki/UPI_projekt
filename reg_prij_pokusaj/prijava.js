@@ -83,10 +83,15 @@ export async function registracijaKorisnika(name, surname, mail, password, repea
         .then(data => console.log(JSON.stringify(data)))
         .catch(error => console.error('Error:', error))
         
-        console.log(user)
+        const userDetails = await fetch(`http://localhost:8080/users/searchByMail/${mail}`)
+        .then(response => response.json())
+        .catch(error => console.error('Error:', error))
+
+        console.log(userDetails)
         boolPrijava=true
+        return ({boolPrijava, userDetails})
     }
-    return boolPrijava
+    return console.error("Error");
 }
 
 // testiranje

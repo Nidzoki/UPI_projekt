@@ -2,24 +2,29 @@ import { useState } from 'react';
 import { List, Card, Button } from 'antd';
 import NavLeft from "../components/navLeft";
 import NavUpper from "../components/navUpper";
+import { useNavigate, Link, Navigate, Route, useLocation } from 'react-router-dom';
 
-const userID = 2 // TODO: get real user id
 
-const scheduleIDs = await fetch(`http://localhost:8080/users/${userID}/schedules`)
-.then(response => response.json())
-.catch(error => console.error('Error:', error), [])
 
-const scheduleList = [];
+const Pocetna = () => {
+
+  const scheduleList = [];
+  const location = useLocation();
+  const [schedules, setSchedules] = useState(scheduleList);
+
+  const userID = location.state.userId
+  console.log(userID);
+  const scheduleIDs = async ()=>await fetch(`http://localhost:8080/users/${userID}/schedules`)
+  .then(response => response.json())
+  .catch(error => console.error('Error:', error))
+
+
 
 for(let i = 0; i < scheduleIDs.length; i++) {
-  scheduleList.push(await fetch( `http://localhost:8080/schedules/searchById/${scheduleIDs[i].schedule}`)
+  scheduleList.push(async ()=>await fetch( `http://localhost:8080/schedules/searchById/${scheduleIDs[i].schedule}`)
   .then(response => response.json())
   .catch(error => console.error('Error:', error)))
 }
-
-const Pocetna = () => {
-  const [schedules, setSchedules] = useState(scheduleList);
-
   const handleEdit = (scheduleId) => {
     //otvori u tom rasporedu i pročitaj sve podatke
     console.log("Edit schedule: ", scheduleId);
